@@ -1,0 +1,92 @@
+{
+  "admins": [
+    {
+      "id": 1,
+      "created_at": "2026-03-08T18:34:01.723Z",
+      "username": "admin",
+      "password": "$2a$10$b79fZ9Ia5wvOs1greX5G9uwm9wOj1Hp4tarZLePy1BvRbglYdvUYy",
+      "display_name": "Parish Admin",
+      "role": "superadmin"
+    },
+    {
+      "id": 2,
+      "created_at": "2026-03-08T18:37:20.853Z",
+      "username": "JPeniel",
+      "password": "$2a$10$GJqyh4IcpOpKG854BSbglO9tyclgdDBv23nNMTofFh9YE6do65UMy",
+      "display_name": "Peniel Bortei",
+      "role": "editor"
+    },
+    {
+      "id": 3,
+      "created_at": "2026-03-08T18:46:15.515Z",
+      "username": "JBortei",
+      "password": "$2a$10$CRdw9kJnyudDJq3tiAt2f.E8zs5ivs90ORmrcr9.y37YBNIeyyQG2",
+      "display_name": "ort",
+      "role": "media"
+    }
+  ],
+  "members": [],
+  "events": [],
+  "sermons": [
+    {
+      "id": 1,
+      "created_at": "2026-03-08T18:44:12.750Z",
+      "title": "hh",
+      "preacher": "The Venerable Vicar",
+      "date": "2026-03-08",
+      "day": "08",
+      "month_year": "Mar 2026",
+      "service": "",
+      "scripture_ref": "",
+      "summary": "",
+      "content": "",
+      "audio_path": "",
+      "video_url": "",
+      "description": "",
+      "scripture": ""
+    }
+  ],
+  "media_posts": [],
+  "comments": [],
+  "likes": [],
+  "gallery": [],
+  "hero_slides": [
+    {
+      "id": 2,
+      "created_at": "2026-03-09T17:43:02.423Z",
+      "image_path": "/uploads/hero/1773078182417-619400.jpg"
+    }
+  ],
+  "submissions": [],
+  "settings": [
+    {
+      "key": "site_title",
+      "value": "St. Peter Anglican Church"
+    },
+    {
+      "key": "tagline",
+      "value": "Nungua · Accra · Ghana"
+    },
+    {
+      "key": "weekly_word",
+      "value": "\"I can do all things through Christ who strengthens me.\" — Philippians 4:13"
+    },
+    {
+      "key": "vicar_name",
+      "value": "The Venerable Vicar"
+    },
+    {
+      "key": "vicar_message",
+      "value": "Welcome to St. Peter Anglican Church."
+    }
+  ],
+  "_seq": {
+    "admins": 3,
+    "media_posts": 4,
+    "likes": 4,
+    "comments": 2,
+    "submissions": 1,
+    "hero_slides": 2,
+    "sermons": 1
+  }
+}

@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>St. Peter Anglican Church – Nungua, Accra, Ghana</title>
+<meta name="description" content="St. Peter Anglican Church, Nungua, Accra, Ghana. Diocese of Accra.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,900;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-wrap">
+    <div class="nav-brand" onclick="go('home')">
+      <img class="nav-logo" src="/images/logo.png" alt="Logo" onerror="this.style.display='none'">
+      <div class="brand-tx">
+        <span class="brand-n">St. Peter Anglican</span>
+        <span class="brand-s">Nungua · Accra · Ghana</span>
+      </div>
+    </div>
+    <div class="nav-links">
+      <button class="nl on" onclick="go('home')">Home</button>
+      <button class="nl" onclick="go('about')">About</button>
+      <button class="nl" onclick="go('worship')">Worship</button>
+      <button class="nl" onclick="go('guilds')">Guilds</button>
+      <button class="nl" onclick="go('sermons')">Sermons</button>
+      <button class="nl" onclick="go('events')">Events</button>
+      <button class="nl" onclick="go('media')">Media</button>
+      <button class="nl" onclick="go('gallery')">Gallery</button>
+      <button class="nl" onclick="go('bcp')">Prayer Book</button>
+      <button class="nl" onclick="go('contact')">Contact</button>
+    </div>
+    <div class="nav-ctrl">
+      <button class="ico-btn" onclick="toggleDark()" title="Toggle dark mode">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <div class="desk-lang-wrap">
+        <button class="lang-btn" id="lang-btn-desktop" onclick="toggleLangDropdown()" title="Change language">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          <span id="lang-label-desktop">EN</span>
+        </button>
+        <div class="lang-dropdown" id="lang-dropdown-desktop">
+          <button class="lang-opt active" onclick="setLang('en');closeLangDropdown()" data-lang="en">English</button>
+          <button class="lang-opt" onclick="setLang('ga');closeLangDropdown()" data-lang="ga">Ga</button>
+          <button class="lang-opt" onclick="setLang('tw');closeLangDropdown()" data-lang="tw">Twi</button>
+          <button class="lang-opt" onclick="setLang('fr');closeLangDropdown()" data-lang="fr">Français</button>
+          <button class="lang-opt" onclick="setLang('it');closeLangDropdown()" data-lang="it">Italiano</button>
+        </div>
+      </div>
+      <button class="btn-give" onclick="go('giving')">Give</button>
+      <button class="ham" id="ham-btn" onclick="toggleMob()">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div id="mob-menu">
+  <button class="mob-link on" onclick="go('home');closeMob()">Home</button>
+  <button class="mob-link" onclick="go('about');closeMob()">About</button>
+  <button class="mob-link" onclick="go('worship');closeMob()">Worship & Liturgy</button>
+  <button class="mob-link" onclick="go('guilds');closeMob()">Guilds & Ministries</button>
+  <button class="mob-link" onclick="go('sermons');closeMob()">Sermons</button>
+  <button class="mob-link" onclick="go('events');closeMob()">Events</button>
+  <button class="mob-link" onclick="go('media');closeMob()">Media Feed</button>
+  <button class="mob-link" onclick="go('gallery');closeMob()">Gallery</button>
+  <button class="mob-link" onclick="go('bcp');closeMob()">Prayer Book</button>
+  <button class="mob-link" onclick="go('contact');closeMob()">Contact</button>
+  <div class="mob-lang-section">
+    <div class="mob-lang-label">Language / Kasa / Nkasa</div>
+    <div class="mob-lang-btns">
+      <button onclick="setLang('en');closeMob()" data-lang="en" class="mob-lang-opt active">English</button>
+      <button onclick="setLang('ga');closeMob()" data-lang="ga" class="mob-lang-opt">Ga</button>
+      <button onclick="setLang('tw');closeMob()" data-lang="tw" class="mob-lang-opt">Twi</button>
+      <button onclick="setLang('fr');closeMob()" data-lang="fr" class="mob-lang-opt">Français</button>
+      <button onclick="setLang('it');closeMob()" data-lang="it" class="mob-lang-opt">Italiano</button>
+    </div>
+  </div>
+  <button class="mob-give" onclick="go('giving');closeMob()">Give to the Church</button>
+</div>
+
+<!-- HOME PAGE -->
+<div id="pg-home" class="pg on">
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-slider" id="hero-slider"></div>
+    <div class="hs-dots" id="hs-dots"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-body">
+      <div class="hero-orn">
+        <span class="orn-line"></span>
+        <span class="orn-cross">&#10013; &#10013; &#10013;</span>
+        <span class="orn-line r"></span>
+      </div>
+      <p class="hero-tag">Diocese of Accra · Church of the Province of West Africa · Est. 1940</p>
+      <h1 class="hero-h1">St. Peter<br>Anglican Church</h1>
+      <p class="hero-sub">Nungua · Accra · Ghana</p>
+      <div class="hero-divider">
+        <span class="hdiv-line"></span>
+        <span class="hdiv-gem"></span>
+        <span class="hdiv-line"></span>
+      </div>
+      <p class="hero-motto">"If God be for us, who shall be against us?" — Romans 8:31</p>
+      <div class="hero-acts">
+        <button class="btn-p" onclick="go('worship')">Join Us This Sunday</button>
+        <button class="btn-ghost" onclick="go('about')">Our Story</button>
+      </div>
+    </div>
+    <div class="svc-bar">
+      <div class="svc-inner">
+        <div class="svc-item">
+          <div class="svc-type">1st Service</div>
+          <div class="svc-time">6:30 AM</div>
+          <div class="svc-day">English · Holy Communion</div>
+        </div>
+        <div class="svc-item">
+          <div class="svc-type">2nd Service</div>
+          <div class="svc-time">9:00 AM</div>
+          <div class="svc-day">Mainly Ga · Holy Communion</div>
+        </div>
+        <div class="svc-item">
+          <div class="svc-type">Children's Service</div>
+          <div class="svc-time">9:00 AM</div>
+          <div class="svc-day">Concurrent · Every Sunday</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VICAR WELCOME -->
+  <section class="sec vicar-sec">
+    <div class="con">
+      <div class="vicar-grid">
+        <div class="fade-in">
+          <div class="vicar-frame">
+            <img src="/images/portraits/priest-amarh.jpg" onerror="this.onerror=null;this.src='/images/portraits/priest-amarh.svg'" alt="Rev. Fr. Emmanuel Amarh" onerror="this.src='/images/portraits/priest-amarh.svg'">
+            <div class="vicar-ph">
+              <div style="font-size:48px;opacity:.3">✝</div>
+              <span>Rev. Fr. Emmanuel Amarh</span>
+            </div>
+          </div>
+        </div>
+        <div class="fade-in">
+          <span class="eyebrow">A Message from the Priest In Charge</span>
+          <h2 class="vicar-name">Rev. Fr. Emmanuel Amarh</h2>
+          <p class="vicar-role">Priest-in-Charge &amp; Chairman PCC · St. Peter Anglican Church, Nungua</p>
+          <p class="vicar-msg">Welcome to St. Peter Anglican Church, Nungua — a community of faith rooted in the rich traditions of the Anglican Communion. Founded on <strong>29th June 1940</strong> by Godfried Borketey Bortey and his brothers, our church has been a beacon of hope and spiritual growth for the people of Nungua and beyond for over 80 years.</p>
+          <p class="vicar-msg">We are a diverse congregation united in our love for Christ and our commitment to serving our community. Whether you are a lifelong Anglican, a seeker of faith, or simply looking for a spiritual home — you will find here <em>a welcome as warm as the Ghanaian sun.</em> Come, let us worship together.</p>
+          <div class="vicar-sig">+ In His Service · Rev. Fr. Emmanuel Amarh</div>
+          <div class="vicar-btns">
+            <button class="btn-o" onclick="go('about')">Read Our Story</button>
+            <button class="btn-p" onclick="go('contact')">Get in Touch</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GUILDS PREVIEW -->
+  <section class="sec">
+    <div class="con">
+      <div class="sec-head">
+        <span class="eyebrow">Ministries & Fellowships</span>
+        <h2 class="sec-title">Our Guilds</h2>
+        <div class="sec-rule"><span class="rule-line"></span><span class="rule-gem"></span><span class="rule-line"></span></div>
+        <p class="sec-sub">Every member called to serve, every guild rooted in prayer and purpose.</p>
+      </div>
+      <div class="guild-grid">
+        <div class="guild-card fade-in" onclick="openGuildModal('bsa')"><div class="g-icon"><img src="/images/guild-bsa.jpg" alt="Guild" style="width:52px;height:52px;object-fit:contain;border-radius:50%"></div><div class="g-name">Brotherhood of Saint Andrew</div><div class="g-desc">A fellowship of men dedicated to prayer, brotherhood, and service in the spirit of the Apostle Andrew.</div><div class="g-meta">Meets every Saturday · 5:00 PM</div></div>
+        <div class="guild-card fade-in" onclick="openGuildModal('aypa')"><div class="g-icon"><img src="/images/guild-aypa.webp" alt="Guild" style="width:52px;height:52px;object-fit:contain;border-radius:50%"></div><div class="g-name">AYPA</div><div class="g-desc">Anglican Young People's Association — nurturing faith, leadership, and mission among parish youth.</div><div class="g-meta">Sundays after Evensong</div></div>
+        <div class="guild-card fade-in" onclick="openGuildModal('mu')"><div class="g-icon"><img src="/images/guild-mu.webp" alt="Guild" style="width:52px;height:52px;object-fit:contain;border-radius:50%"></div><div class="g-name">Mothers' Union</div><div class="g-desc">A worldwide Anglican movement strengthening marriage and supporting families in faith and life.</div><div class="g-meta">Meets every Tuesday · 4:00 PM</div></div>
+        <div class="guild-card fade-in" onclick="openGuildModal('ss')"><div class="g-icon"><img src="/images/guild-ss.webp" alt="Guild" style="width:52px;height:52px;object-fit:contain;border-radius:50%"></div><div class="g-name">Servers of the Sanctuary</div><div class="g-desc">Dedicated acolytes who minister at the altar with reverence during sacred liturgy every Sunday.</div><div class="g-meta">Training every Friday · 6:00 PM</div></div>
+        <div class="guild-card fade-in" onclick="openGuildModal('sh')"><div class="g-icon"><img src="/images/guild-sh.webp" alt="Guild" style="width:52px;height:52px;object-fit:contain;border-radius:50%"></div><div class="g-name">Sacred Heart of Jesus</div><div class="g-desc">A devotional society seeking union with Christ through contemplative prayer and acts of charity.</div><div class="g-meta">Meets every Wednesday · 5:30 PM</div></div>
+        <div class="guild-card fade-in" onclick="openGuildModal('gs')"><div class="g-icon"><img src="/images/guild-gs.png" alt="Guild" style="width:52px;height:52px;object-fit:contain;border-radius:50%"></div><div class="g-name">Good Shepherd</div><div class="g-desc">A pastoral guild caring for the sick, the elderly, and those in need within and beyond the parish.</div><div class="g-meta">Outreach every Thursday · 3:00 PM</div></div>
+      </div>
+      <div class="sec-cta"><button class="btn-o" onclick="go('guilds')">View All Guilds →</button></div>
+    </div>
+  </section>
+
+  <!-- SERMONS PREVIEW -->
+  <section class="sec sec-alt">
+    <div class="con">
+      <div class="sec-head">
+        <span class="eyebrow">The Preached Word</span>
+        <h2 class="sec-title">Recent Sermons</h2>
+        <div class="sec-rule"><span class="rule-line"></span><span class="rule-gem"></span><span class="rule-line"></span></div>
+      </div>
+      <div class="sermon-wrap" id="home-sermons-list">
+        <div class="loading-msg">Loading sermons...</div>
+      </div>
+      <div class="sec-cta"><button class="btn-o" onclick="go('sermons')">View All Sermons →</button></div>
+    </div>
+  </section>
+
+  <!-- EVENTS PREVIEW -->
+  <section class="sec">
+    <div class="con">
+      <div class="sec-head">
+        <span class="eyebrow">What's Coming</span>
+        <h2 class="sec-title">Upcoming Events</h2>
+        <div class="sec-rule"><span class="rule-line"></span><span class="rule-gem"></span><span class="rule-line"></span></div>
+      </div>
+      <div class="event-grid" id="home-events-grid">
+        <div class="loading-msg">Loading events...</div>
+      </div>
+      <div class="sec-cta"><button class="btn-o" onclick="go('events')">See All Events →</button></div>
+    </div>
+  </section>
+</div>
+
+<!-- ABOUT PAGE -->
+<div id="pg-about" class="pg">
+
+  <!-- HERO -->
+  <div class="detail-hero">
+    <div class="con"><div class="dh-inner">
+      <span class="dh-eye">Our Heritage · Est. 29th June 1940</span>
+      <h1 class="dh-title">About St. Peter Anglican Church</h1>
+      <p class="dh-sub">Founded on 29th June 1940 — a beacon of faith, education and community in Nungua for over 80 years.</p>
+    </div></div>
+  </div>
+
+  <!-- OUR STORY -->
+  <section class="sec"><div class="con">
+    <div class="sec-head">
+      <span class="eyebrow">Our Story</span>
+      <h2 class="sec-title">A Legacy of Faith Since 1940</h2>
+      <div class="sec-rule"><span class="rule-line"></span><span class="rule-gem"></span><span class="rule-line"></span></div>
+    </div>
+    <div class="ab-grid">
+      <div class="ab-text fade-in">
+        <p>In the late 1930s, as Nungua's population grew, there was a need for another church beyond the existing Presbyterian Church. The vision for St Peter Anglican Church was conceived by the late <strong>Godfried Borketey Bortey (Denfutse)</strong>, who invited his brothers Lawrence Borketey Borquaye and Ebenezer Bortier Borquaye to join him in this sacred mission.</p>
+        <p>After consultations with Rev. Fr. A. K. Nelson (later Assistant Bishop) and the <strong>Rt. Rev. Dr. John Orfeur Aglionby</strong>, then Bishop of Accra, our church was born. St Peter's Anglican Church was <strong>inaugurated on 29th June 1940 at 3:30 pm</strong>, coinciding with the Feast of the Apostles Peter and Paul.</p>
+        <p>The first place of worship was the ground floor of a building belonging to Mr. L. B. Borquaye's father. As the congregation grew, a school was established in 1950, and the present site was acquired. The current church building was completed in 1980 — the cornerstone plaque unveiled by Mr. John Anangfio Tetteh — and <strong>consecrated on 4th February 1984</strong> by Rt. Rev. F. W. B. Thompson. The church attained Parochial Status in July 1983.</p>
+        <p>Today, St Peter's continues to be a beacon of hope and a centre for spiritual growth, with out-stations at <strong>St. Augustine's</strong> (started 1992) and <strong>St. Monica Baatsonaa</strong> (started 2003), and the <strong>St Peter the Rock Senior High School</strong> officially started in 2003.</p>
+        <p style="font-style:italic;color:var(--text2)">We are a diverse congregation united in our love for Christ and our commitment to serving our community. Whether you're seeking spiritual growth, community connection, or a place to worship — <strong>everyone is welcome at St Peter's.</strong></p>
+
+        <div class="timeline">
+          <div class="tl-item"><div class="tl-year">1940</div><div><div class="tl-title">Church Founded</div><div class="tl-desc">Inaugurated on 29th June by Rt. Rev. Dr. John Orfeur Aglionby, Bishop of Accra. First worship held in Mr. L. B. Borquaye's family building.</div></div></div>
+          <div class="tl-item"><div class="tl-year">1950</div><div><div class="tl-title">School Established</div><div class="tl-desc">St Peter's School founded to educate boys and girls in the Nungua community.</div></div></div>
+          <div class="tl-item"><div class="tl-year">1980</div><div><div class="tl-title">Main Building Completed</div><div class="tl-desc">Current church building completed. Cornerstone plaque unveiled by Mr. John Anangfio Tetteh.</div></div></div>
+          <div class="tl-item"><div class="tl-year">1983</div><div><div class="tl-title">Parochial Status</div><div class="tl-desc">Church attained Parochial Status in July — a significant milestone in our journey of growth.</div></div></div>
+          <div class="tl-item"><div class="tl-year">1984</div><div><div class="tl-title">Church Consecrated</div><div class="tl-desc">Building consecrated on 4th February by Rt. Rev. F. W. B. Thompson, blessing our permanent place of worship.</div></div></div>
+          <div class="tl-item"><div class="tl-year">1992</div><div><div class="tl-title">St. Augustine's Out-Station</div><div class="tl-desc">Establishment of St. Augustine's, extending the ministry of St Peter's to new communities.</div></div></div>
+          <div class="tl-item"><div class="tl-year">2003</div><div><div class="tl-title">Growth &amp; Education</div><div class="tl-desc">St. Monica Baatsonaa out-station started, and St Peter the Rock Senior High School officially opened.</div></div></div>
+          <div class="tl-item"><div class="tl-year">Today</div><div><div class="tl-title">A Thriving Community</div><div class="tl-desc">A vibrant, intergenerational congregation worshipping, serving, and bearing witness in Nungua and across Accra.</div></div></div>
+        </div>
+      </div>
+
+      <!-- Mission, Vision & Values -->
+      <div class="fade-in">
+        <div class="beliefs-label">Our Mission</div>
+        <div class="belief-card"><div class="bc-text">To glorify God by making disciples of Jesus Christ, nurturing spiritual growth, and serving our community with love and compassion. We are committed to spreading the Gospel, building strong families, and being the hands and feet of Christ in Nungua and beyond.</div></div>
+
+        <div class="beliefs-label" style="margin-top:20px">Our Vision</div>
+        <div class="belief-card"><div class="bc-text">To be a thriving, Christ-centered community where every person experiences God's love, grows in faith, and discovers their purpose — transforming lives, strengthening families, and impacting our community for generations to come.</div></div>
+
+        <div class="beliefs-label" style="margin-top:20px">Our Core Values</div>
+        <div class="belief-card"><div class="bc-title">Worship</div><div class="bc-text">Reverent, Spirit-filled worship combining traditional Anglican liturgy with contemporary expressions of praise.</div></div>
+        <div class="belief-card"><div class="bc-title">Scripture</div><div class="bc-text">The Bible is God's inspired Word — the foundation for our faith, teaching, and daily living.</div></div>
+        <div class="belief-card"><div class="bc-title">Community &amp; Service</div><div class="bc-text">Authentic relationships and a welcoming environment where everyone belongs, paired with compassionate service to our church family and community.</div></div>
+        <div class="belief-card"><div class="bc-title">Discipleship &amp; Excellence</div><div class="bc-text">Helping every person grow in Christ to become a mature, fruitful disciple — honouring God with our best efforts and highest integrity.</div></div>
+        <div class="vicar-btns" style="margin-top:28px">
+          <button class="btn-p" onclick="go('register')">Join the Parish</button>
+          <button class="btn-o" onclick="go('contact')">Contact Us</button>
+        </div>
+      </div>
+    </div>
+  </div></section>
+
+  <!-- FOUNDING FATHERS -->
+  <section class="sec sec-alt"><div class="con">
+    <div class="sec-head">
+      <span class="eyebrow">Honouring Our Founders</span>
+      <h2 class="sec-title">Our Founding Fathers</h2>
+      <div class="sec-rule"><span class="rule-line"></span><span class="rule-gem"></span><span class="rule-line"></span></div>
+      <p class="sec-sub">The visionaries who, in faith and sacrifice, established St Peter's Anglican Church in 1940.</p>
+    </div>
+
+    <div class="founders-grid">
+      <div class="portrait-card fade-in">
+        <img src="/images/african-church-founder-portrait-1940s.jpg" alt="Godfried Borketey Bortey" class="portrait-img" onerror="this.src='/images/portraits/priest-amarh.svg'">
+        <div class="portrait-body">
+          <div class="portrait-name">Godfried Borketey Bortey</div>
+          <div class="portrait-role">Principal Founder · Denfutse</div>
+          <div class="portrait-desc">The visionary who conceived the idea of establishing St Peter's Anglican Church in Nungua. His leadership and dedication laid the foundation for what would become a spiritual home for generations.</div>
+        </div>
+      </div>
+      <div class="portrait-card fade-in">
+        <img src="/images/african-church-founder-portrait-1940s-gentleman.jpg" alt="Lawrence Borketey Borquaye" class="portrait-img" onerror="this.src='/images/portraits/priest-amarh.svg'">
+        <div class="portrait-body">
+          <div class="portrait-name">Lawrence Borketey Borquaye</div>
+          <div class="portrait-role">Co-Founder</div>
+          <div class="portrait-desc">Brother to Godfried, he provided the ground floor of his father's building as the first place of worship. His generosity and commitment were instrumental in the church's early establishment.</div>
+        </div>
+      </div>
+      <div class="portrait-card fade-in">
+        <img src="/images/african-church-founder-portrait-1940s-elder.jpg" alt="Ebenezer Bortier Borquaye" class="portrait-img" onerror="this.src='/images/portraits/priest-amarh.svg'">
+        <div class="portrait-body">
+          <div class="portrait-name">Ebenezer Bortier Borquaye</div>
+          <div class="portrait-role">Co-Founder</div>
+          <div class="portrait-desc">The third brother who joined the sacred mission. His partnership with his brothers ensured the successful founding and growth of St Peter's Anglican Church.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Key contributors -->
+    <div class="sec-head" style="margin-top:48px">
+      <h2 class="sec-title" style="font-size:1.4rem">Key Contributors to Our Foundation</h2>
+      <div class="sec-rule"><span class="rule-line"></span><span class="rule-gem"></span><span class="rule-line"></span></div>
+    </div>
+    <div class="guild-grid">
+      <div class="guild-card fade-in">
+        <div class="g-icon"><img src="/images/logo.png" alt="" style="width:52px;height:52px;object-fit:contain;border-radius:50%"></div>
+        <div class="g-name">Rev. Fr. A. K. Nelson</div>
+        <div style="font-family:var(--fd);font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:8px">Later Assistant Bishop</div>
+        <div class="g-desc">Provided crucial guidance and support during the church's founding phase. His counsel to the founders was instrumental in bringing St Peter's into being.</div>
+      </div>
+      <div class="guild-card fade-in">
+        <div class="g-icon"><img src="/images/logo.png" alt="" style="width:52px;height:52px;object-fit:contain;border-radius:50%"></div>
+        <div class="g-name">Rt. Rev. Dr. John Orfeur Aglionby</div>
+        <div style="font-family:var(--fd);font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:8px">Bishop of Accra · Inaugurator</div>
+        <div class="g-desc">Bishop of Accra who inaugurated the church on 29th June 1940, establishing our spiritual foundation and formally bringing St Peter's Anglican Church into the Diocese.</div>
+      </div>
+      <div class="guild-card fade-in">
+        <div class="g-icon"><img src="/images/logo.png" alt="" style="width:52px;height:52px;object-fit:contain;border-radius:50%"></div>
+        <div class="g-name">Mr. John Anangfio Tetteh</div>
+        <div style="font-family:var(--fd);font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:8px">Cornerstone</div>
+        <div class="g-desc">Unveiled the cornerstone plaque of the current church building in 1980, marking a pivotal new chapter in our history and the permanence of our home.</div>
+      </div>
+      <div class="guild-card fade-in">
+        <div class="g-icon"><img src="/images/logo.png" alt="" style="width:52px;height:52px;object-fit:contain;border-radius:50%"></div>
+        <div class="g-name">Rt. Rev. F. W. B. Thompson</div>
+        <div style="font-family:var(--fd);font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:8px">Consecrator · 1984</div>
+        <div class="g-desc">Consecrated the current church building on 4th February 1984, blessing our permanent place of worship and sealing it for the glory of God.</div>
+      </div>
+    </div>
+
+    <blockquote style="text-align:center;font-family:var(--fa);font-size:1.1rem;font-style:italic;color:var(--text2);max-width:680px;margin:44px auto 0;padding:20px 28px;line-height:1.9;border-left:3px solid var(--gold);background:rgba(75,0,130,.04)">
+      "We stand on the shoulders of giants. Their faith, vision, and sacrifice continue to inspire us as we carry forward the mission of St Peter's Anglican Church."
+    </blockquote>
+  </div></section>
+
+  <!-- OUR LEADERSHIP -->
+  <section class="sec"><div class="con">
+    <div class="sec-head">
+      <span class="eyebrow">Our Clergy &amp; Officers</span>
+      <h2 class="sec-title">Our Leadership</h2>
+      <div class="sec-rule"><span class="rule-line"></span><span class="rule-gem"></span><span class="rule-line"></span></div>
+      <p class="sec-sub">Dedicated servants leading our church family in worship, pastoral care and mission.</p>
+    </div>
+
+    <!-- Priest In Charge — full feature -->
+    <div class="vicar-grid" style="margin-bottom:56px">
+      <div class="fade-in">
+        <div class="vicar-frame">
+          <img src="/images/portraits/priest-amarh.jpg" onerror="this.onerror=null;this.src='/images/portraits/priest-amarh.svg'" alt="Rev. Fr. Emmanuel Amarh" onerror="this.src='/images/portraits/priest-amarh.svg'" style="width:100%;height:100%;object-fit:cover">
+          <div class="vicar-ph">
+            <div style="font-size:48px;opacity:.3">✝</div>
+            <span>Rev. Fr. Emmanuel Amarh</span>
+          </div>
+        </div>
+      </div>
+      <div class="fade-in">
+        <span class="eyebrow">Priest In Charge</span>
+        <h2 class="vicar-name">Rev. Fr. Emmanuel Amarh</h2>
+        <p class="vicar-role">Priest-in-Charge &amp; Chairman, Parochial Church Council</p>
+        <p class="vicar-msg">Rev. Fr. Emmanuel Amarh has been faithfully serving as the Priest In Charge of St Peter Anglican Church Nungua since his appointment. With a heart for God's people and a passion for spiritual growth, he leads our congregation with wisdom, compassion, and dedication to the Gospel of Jesus Christ.</p>
+        <p class="vicar-msg">Under his leadership, our church continues to grow in faith, unity, and service to the community. He oversees all spiritual matters and chairs the Parochial Church Council, guiding the vision and direction of our parish.</p>
+        <div class="vicar-sig">+ In His Service</div>
+        <div class="vicar-btns">
+          <button class="btn-p" onclick="go('contact')">Contact the Priest</button>
+          <button class="btn-o" onclick="window.location.href='mailto:priest@spacgh.com'">priest@spacgh.com</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Associate Priests -->
+    <div class="sec-head" style="margin-top:0">
+      <span class="eyebrow">Supporting the Ministry</span>
+      <h2 class="sec-title" style="font-size:1.45rem">Associate Priests</h2>
+      <div class="sec-rule"><span class="rule-line"></span><span class="rule-gem"></span><span class="rule-line"></span></div>
+    </div>
+    <div class="portraits-grid">
+      <div class="portrait-card fade-in">
+        <img src="/images/portraits/priest-tetteh.jpg" onerror="this.onerror=null;this.src='/images/portraits/priest-tetteh.svg'" alt="Rev. Fr. Samuel Tetteh" class="portrait-img" onerror="this.src='/images/portraits/priest-amarh.svg'">
+        <div class="portrait-body">
+          <div class="portrait-name">Rev. Fr. Samuel Tetteh</div>
+          <div class="portrait-role">Associate Priest</div>
+          <div class="portrait-desc">Serves through pastoral care, teaching, and leading worship services. Dedicated to discipleship and community outreach.</div>
+        </div>
+      </div>
+      <div class="portrait-card fade-in">
+        <img src="/images/portraits/priest-mensah.jpg" onerror="this.onerror=null;this.src='/images/portraits/priest-mensah.svg'" alt="Rev. Fr. Joseph Mensah" class="portrait-img" onerror="this.src='/images/portraits/priest-amarh.svg'">
+        <div class="portrait-body">
+          <div class="portrait-name">Rev. Fr. Joseph Mensah</div>
+          <div class="portrait-role">Associate Priest</div>
+          <div class="portrait-desc">Wealth of experience in youth ministry and biblical teaching. Equipping believers to discover their God-given purpose.</div>
+        </div>
+      </div>
+      <div class="portrait-card fade-in">
+        <img src="/images/portraits/priest-quartey.jpg" onerror="this.onerror=null;this.src='/images/portraits/priest-quartey.svg'" alt="Rev. Fr. Daniel Quartey" class="portrait-img" onerror="this.src='/images/portraits/priest-amarh.svg'">
+        <div class="portrait-body">
+          <div class="portrait-name">Rev. Fr. Daniel Quartey</div>
+          <div class="portrait-role">Associate Priest</div>
+          <div class="portrait-desc">Heart for evangelism and missions. Leads outreach programs and committed to spreading the Gospel in our community.</div>
+        </div>
+      </div>
+      <div class="portrait-card fade-in">
+        <img src="/images/portraits/priest-addo.jpg" onerror="this.onerror=null;this.src='/images/portraits/priest-addo.svg'" alt="Rev. Fr. Michael Addo" class="portrait-img" onerror="this.src='/images/portraits/priest-amarh.svg'">
+        <div class="portrait-body">
+          <div class="portrait-name">Rev. Fr. Michael Addo</div>
+          <div class="portrait-role">Associate Priest</div>
+          <div class="portrait-desc">Specialises in pastoral counselling and family ministry. Compassionate approach helping families grow in faith.</div>
+        </div>
+      </div>
+      <div class="portrait-card fade-in">
+        <img src="/images/portraits/priest-nartey.jpg" onerror="this.onerror=null;this.src='/images/portraits/priest-nartey.svg'" alt="Rev. Fr. Peter Nartey" class="portrait-img" onerror="this.src='/images/portraits/priest-amarh.svg'">
+        <div class="portrait-body">
+          <div class="portrait-name">Rev. Fr. Peter Nartey</div>
+          <div class="portrait-role">Associate Priest</div>
+          <div class="portrait-desc">Powerful preaching and deep knowledge of Scripture. Leads Bible study groups helping believers grow in God's Word.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PCC Officers -->
+    <div class="sec-head" style="margin-top:52px">
+      <span class="eyebrow">Parochial Church Council</span>
+      <h2 class="sec-title" style="font-size:1.45rem">Church Officers</h2>
+      <div class="sec-rule"><span class="rule-line"></span><span class="rule-gem"></span><span class="rule-line"></span></div>
+    </div>
+    <div class="guild-grid">
+      <div class="guild-card fade-in">
+        <div class="g-icon"><img src="/images/african-church-warden.jpg" alt="Priest Warden" style="width:52px;height:52px;object-fit:cover;border-radius:50%"></div>
+        <div class="g-name">Mr. U. U. P. Fleischer Djoleto</div>
+        <div style="font-family:var(--fd);font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:8px">Priest Warden</div>
+        <div class="g-desc">Supporting the vicar and overseeing the spiritual affairs of the church with dedication and integrity.</div>
+      </div>
+      <div class="guild-card fade-in">
+        <div class="g-icon"><img src="/images/logo.png" alt="" style="width:52px;height:52px;object-fit:contain;border-radius:50%"></div>
+        <div class="g-name">Mr. Atsu Vormawah</div>
+        <div style="font-family:var(--fd);font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:8px">People's Warden</div>
+        <div class="g-desc">Representing the congregation and managing practical church affairs on behalf of the parishioners.</div>
+      </div>
+      <div class="guild-card fade-in">
+        <div class="g-icon"><img src="/images/logo.png" alt="" style="width:52px;height:52px;object-fit:contain;border-radius:50%"></div>
+        <div class="g-name">Mr. Henry Otoo Okoe</div>
+        <div style="font-family:var(--fd);font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:8px">Synod Representative</div>
+        <div class="g-desc">Representing St Peter's at the Diocesan Synod, ensuring our parish voice is heard across the Diocese of Accra.</div>
+      </div>
+      <div class="guild-card fade-in">
+        <div class="g-icon"><img src="/images/african-church-secretary.jpg" alt="PCC Secretary" style="width:52px;height:52px;object-fit:cover;border-radius:50%"></div>
+        <div class="g-name">Mr. Eric Offei Darko</div>
+        <div style="font-family:var(--fd);font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:8px">PCC Secretary</div>
+        <div class="g-desc">Managing church administration and communications with excellence and careful attention to our parish records.</div>
+      </div>
+    </div>
+  </div></section>
+
+</div>
+
+<!-- WORSHIP PAGE -->
+<div id="pg-worship" class="pg">
+  <div class="detail-hero"><div class="con"><div class="dh-inner">
+    <span class="dh-eye">Liturgy & Sacraments</span>
+    <h1 class="dh-title">Worship & Liturgy</h1>
+    <p class="dh-sub">Ordered, reverent, and scriptural worship as the Church has offered for centuries.</p>
+  </div></div></div>
+  <section class="sec"><div class="con">
+    <div class="sec-head">
+      <span class="eyebrow">The Church Year</span>
+      <h2 class="sec-title">The Liturgical Seasons</h2>
+      <div class="sec-rule"><span class="rule-line"></span><span class="rule-gem"></span><span class="rule-line"></span></div>
+    </div>
+    <div class="seasons">
+      <div class="season s-adv"><div class="season-col" style="background:#7B20B2"></div><div class="season-name">Advent</div><div class="season-dates">4 Sundays before Christmas</div><p class="season-p">A holy season of waiting, preparation, and prophetic hope. Vestments: Purple.</p></div>
+      <div class="season s-lent"><div class="season-col" style="background:#900050"></div><div class="season-name">Lent</div><div class="season-dates">Ash Wednesday to Holy Saturday</div><p class="season-p">Forty days of penitence and self-examination following Our Lord into the wilderness. Vestments: Purple.</p></div>
+      <div class="season s-east"><div class="season-col" style="background:#C9A227"></div><div class="season-name">Easter</div><div class="season-dates">50 Days of Resurrection Joy</div><p class="season-p">The Great Fifty Days — the queen of all seasons. Proclaimed with relentless joy. Vestments: White and Gold.</p></div>
+      <div class="season s-pent"><div class="season-col" style="background:#CC0000"></div><div class="season-name">Pentecost</div><div class="season-dates">The Day of the Holy Spirit</div><p class="season-p">The descent of the Holy Spirit — the birthday of the Church. Green season follows. Vestments: Red, then Green.</p></div>
+    </div>
+    <div class="sec-head" style="margin-top:60px">
+      <span class="eyebrow">Means of Grace</span>
+      <h2 class="sec-title">The Holy Sacraments</h2>
+      <div class="sec-rule"><span class="rule-line"></span><span class="rule-gem"></span><span class="rule-line"></span></div>
+    </div>
+    <div class="sacr-grid">
+      <div class="sacr-card"><span class="sacr-ico">💧</span><div class="sacr-name">Holy Baptism</div><p class="sacr-desc">In Baptism, we are made members of the Body of Christ and given new birth by water and the Holy Spirit. All are welcome — infants and adults.</p></div>
+      <div class="sacr-card"><span class="sacr-ico">🕊</span><div class="sacr-name">Confirmation</div><p class="sacr-desc">Public affirmation of baptismal vows, administered by the Bishop with prayer and the laying on of hands. Classes held annually during Lent.</p></div>
+      <div class="sacr-card"><span class="sacr-ico">🍞</span><div class="sacr-name">Holy Eucharist</div><p class="sacr-desc">The central act of Anglican worship — the breaking of bread in remembrance of Christ's once-for-all sacrifice on the Cross. Every Sunday 7:00 AM.</p></div>
+      <div class="sacr-card"><span class="sacr-ico">💍</span><div class="sacr-name">Holy Matrimony</div><p class="sacr-desc">The sacred covenant of marriage made before God. Couples must meet with the Vicar at least 3 months in advance to arrange preparation classes.</p></div>
+      <div class="sacr-card"><span class="sacr-ico">🙌</span><div class="sacr-name">Holy Orders</div><p class="sacr-desc">The setting apart of Deacons, Priests, and Bishops through solemn prayer and the laying on of hands in the apostolic succession.</p></div>
+      <div class="sacr-card"><span class="sacr-ico">🫒</span><div class="sacr-name">Anointing of the Sick</div><p class="sacr-desc">Healing prayer with the anointing of holy oil for the sick and suffering, following the apostolic practice in the Epistle of James.</p></div>
+    </div>
+    <div class="svc-times-box">
+      <div class="stb-label">Sunday Service Times</div>
+      <div class="stb-grid">
+        <div class="stb-item"><div class="stb-type">Holy Communion</div><div class="stb-time">7:00 AM</div><div class="stb-day">Every Sunday</div></div>
+        <div class="stb-item"><div class="stb-type">Morning Prayer</div><div class="stb-time">9:30 AM</div><div class="stb-day">Every Sunday</div></div>
+        <div class="stb-item"><div class="stb-type">Evensong</div><div class="stb-time">6:00 PM</div><div class="stb-day">Every Sunday</div></div>
+      </div>
+    </div>
+  </div></section>
+</div>
+
+<!-- GUILDS PAGE -->
+<div id="pg-guilds" class="pg">
+  <div class="detail-hero"><div class="con"><div class="dh-inner">
+    <span class="dh-eye">Ministries & Fellowships</span>
+    <h1 class="dh-title">Guilds & Ministries</h1>
+    <p class="dh-sub">Every member finds their place; every guild a school of holiness.</p>
+  </div></div></div>
+  <section class="sec"><div class="con">
+    <div class="guild-grid" id="guilds-full-grid"></div>
+  </div></section>
+</div>
+
+<!-- SERMONS PAGE -->
+<div id="pg-sermons" class="pg">
+  <div class="detail-hero"><div class="con"><div class="dh-inner">
+    <span class="dh-eye">The Preached Word</span>
+    <h1 class="dh-title">Sermons</h1>
+    <p class="dh-sub">Hear the Word proclaimed. Every sermon is an encounter with the living God.</p>
+  </div></div></div>
+  <section class="sec"><div class="con">
+    <input id="sermon-search" type="text" placeholder="Search by title, preacher, scripture…" class="cf-input search-input" oninput="filterSermons()">
+    <div id="sermons-list" class="sermon-wrap"></div>
+    <p id="sermon-empty" style="display:none" class="empty-msg">No sermons match your search.</p>
+  </div></section>
+</div>
+
+<!-- EVENTS PAGE -->
+<div id="pg-events" class="pg">
+  <div class="detail-hero"><div class="con"><div class="dh-inner">
+    <span class="dh-eye">What's Coming</span>
+    <h1 class="dh-title">Events & Services</h1>
+    <p class="dh-sub">Mark your calendar. Come and share in these sacred moments together.</p>
+  </div></div></div>
+  <section class="sec"><div class="con">
+    <div class="event-grid" id="events-grid"></div>
+  </div></section>
+</div>
+
+<!-- MEDIA PAGE -->
+<div id="pg-media" class="pg">
+  <div class="detail-hero"><div class="con"><div class="dh-inner">
+    <span class="dh-eye">Parish Life</span>
+    <h1 class="dh-title">Media Feed</h1>
+    <p class="dh-sub">Moments of worship, community, and grace — from the heart of St. Peter's.</p>
+  </div></div></div>
+  <section class="sec sec-stone"><div class="con">
+    <div class="ww-banner">
+      <div class="ww-eye">✦ Weekly Word · Posted by the Vicar</div>
+      <div class="ww-verse" id="ww-verse">"I can do all things through Christ who strengthens me."</div>
+      <div class="ww-ref" id="ww-ref">— Philippians 4:13</div>
+    </div>
+    <div class="med-ctrl">
+      <div class="med-tabs">
+        <button class="med-tab on" onclick="filterMedia(this,'all')">All Posts</button>
+        <button class="med-tab" onclick="filterMedia(this,'pinned')">Pinned</button>
+        <button class="med-tab" onclick="filterMedia(this,'photo')">Photos</button>
+        <button class="med-tab" onclick="filterMedia(this,'ww')">Weekly Word</button>
+      </div>
+    </div>
+    <div class="med-grid" id="media-grid">
+      <div class="loading-msg" style="grid-column:1/-1">Loading posts...</div>
+    </div>
+  </div></section>
+</div>
+
+<!-- GALLERY PAGE -->
+<div id="pg-gallery" class="pg">
+  <div class="detail-hero"><div class="con"><div class="dh-inner">
+    <span class="dh-eye">Parish Photography</span>
+    <h1 class="dh-title">Gallery</h1>
+    <p class="dh-sub">Glimpses of grace — moments of worship, fellowship, and service at St. Peter's.</p>
+  </div></div></div>
+  <section class="sec sec-alt"><div class="con">
+    <div class="gal-grid" id="gallery-grid">
+      <div class="gal-item gal-lg" onclick="lightbox('/uploads/building.jpg')">
+        <img src="/uploads/building.jpg" alt="St Peter Anglican Church" onerror="this.style.display='none'">
+        <div class="gal-ph"></div>
+        <div class="gal-ov"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+      </div>
+      <div class="gal-item" onclick="lightbox('/uploads/building2.jpg')">
+        <img src="/uploads/building2.jpg" alt="St Peter Anglican Church" onerror="this.style.display='none'">
+        <div class="gal-ph"></div>
+        <div class="gal-ov"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+      </div>
+
+    </div>
+  </div></section>
+</div>
+
+<!-- BOOK OF COMMON PRAYER -->
+<div id="pg-bcp" class="pg">
+  <div class="detail-hero"><div class="con"><div class="dh-inner">
+    <span class="dh-eye">Liturgical Texts</span>
+    <h1 class="dh-title">The Book of Common Prayer</h1>
+    <p class="dh-sub">The historic liturgy of the Anglican Communion — prayers for every occasion of life.</p>
+  </div></div></div>
+  <section class="sec"><div class="con" id="bcp-container"></div></section>
+</div>
+
+<!-- GIVING PAGE -->
+<div id="pg-giving" class="pg">
+  <section class="give-sec"><div class="con">
+    <div class="give-grid">
+      <div class="fade-in">
+        <span class="eyebrow" style="color:var(--gold)">Stewardship</span>
+        <h2 class="give-title">Give to the<br>Lord's Work</h2>
+        <blockquote class="give-quote">
+          "Each of you should give what you have decided in your heart to give, not reluctantly or under compulsion, for God loves a cheerful giver."
+          <cite>— 2 Corinthians 9:7</cite>
+        </blockquote>
+        <div class="give-methods">
+          <div class="give-method"><div class="gm-ico"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18" stroke-width="3"/></svg></div><div><div class="gm-name">Mobile Money (MTN)</div><div class="gm-sub">Send to: 020 962 4094 · St Peter Anglican Church</div></div></div>
+          <div class="give-method"><div class="gm-ico"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18" stroke-width="3"/></svg></div><div><div class="gm-name">Mobile Money (Vodafone)</div><div class="gm-sub">Send to: 020 962 4094 · Include your name in memo</div></div></div>
+          <div class="give-method"><div class="gm-ico"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="22" x2="21" y2="22"/><line x1="6" y1="18" x2="6" y2="11"/><line x1="10" y1="18" x2="10" y2="11"/><line x1="14" y1="18" x2="14" y2="11"/><line x1="18" y1="18" x2="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg></div><div><div class="gm-name">Bank Transfer</div><div class="gm-sub">GCB Bank · Branch: Nungua · Account: XXXX-XXXX-XX</div></div></div>
+          <div class="give-method"><div class="gm-ico"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg></div><div><div class="gm-name">Sunday Offertory</div><div class="gm-sub">Plates passed at all three Sunday services</div></div></div>
+        </div>
+      </div>
+      <div class="give-form fade-in">
+        <div class="gf-title">✦ Record Your Donation</div>
+        <label class="gfl">Full Name</label>
+        <input class="gfi" type="text" placeholder="Your full name" id="g-name">
+        <label class="gfl">Amount (GHS)</label>
+        <input class="gfi" type="number" placeholder="e.g. 50.00" id="g-amt">
+        <label class="gfl">Purpose</label>
+        <select class="gfi" id="g-purp">
+          <option>General Offering</option>
+          <option>Building Fund</option>
+          <option>Mission Fund</option>
+          <option>Charity & Relief</option>
+          <option>Harvest Thanksgiving</option>
+        </select>
+        <label class="gfl">Payment Method</label>
+        <select class="gfi" id="g-meth">
+          <option>Mobile Money (MTN)</option>
+          <option>Mobile Money (Vodafone)</option>
+          <option>Bank Transfer</option>
+          <option>Sunday Offertory</option>
+        </select>
+        <label class="gfl">Reference / Note (optional)</label>
+        <input class="gfi" type="text" placeholder="Any notes…" id="g-note">
+        <button class="give-btn" onclick="submitDonation()">✦ Submit Donation Record</button>
+      </div>
+    </div>
+  </div></section>
+</div>
+
+<!-- CONTACT PAGE -->
+<div id="pg-contact" class="pg">
+  <div class="detail-hero"><div class="con"><div class="dh-inner">
+    <span class="dh-eye">Get in Touch</span>
+    <h1 class="dh-title">Contact Us</h1>
+    <p class="dh-sub">We would love to hear from you. The door of St. Peter's is always open.</p>
+  </div></div></div>
+  <section class="sec"><div class="con">
+    <div class="con-grid">
+      <div class="fade-in">
+        <div class="cd"><div class="cd-ico"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div><div class="cd-label">Church Address</div><div class="cd-val">St. Peter Anglican Church<br>Nuumo Borketey Larweh St, Nungua<br>Accra, Greater Accra Region, Ghana</div></div></div>
+        <div class="cd"><div class="cd-ico"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div><div><div class="cd-label">Phone</div><div class="cd-val"><a href="tel:+233209624094" style="color:var(--gold)">+233 (0) 20 962 4094</a></div></div></div>
+        <div class="cd"><div class="cd-ico"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div><div class="cd-label">Email</div><div class="cd-val"><a href="mailto:info@stpeternungua.org" style="color:var(--gold)">info@stpeternungua.org</a><br><a href="mailto:priest@spacgh.com" style="color:var(--gold)">priest@spacgh.com</a></div></div></div>
+        <div class="cd"><div class="cd-ico"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div><div class="cd-label">Office Hours</div><div class="cd-val">Monday – Friday: 9:00 AM – 5:00 PM<br>Saturday: 9:00 AM – 2:00 PM<br>Sunday: Closed (Worship Services)</div></div></div>
+        <div class="cd"><div class="cd-ico"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><div><div class="cd-label">Sunday Services</div><div class="cd-val">Holy Communion · 7:00 AM<br>Morning Prayer · 9:30 AM<br>Evensong · 6:00 PM</div></div></div>
+        <div class="cd"><div class="cd-ico"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="2" x2="12" y2="22"/><line x1="5" y1="8" x2="19" y2="8"/></svg></div><div><div class="cd-label">Priest In Charge</div><div class="cd-val">Rev. Fr. Emmanuel Amarh<br><a href="mailto:priest@spacgh.com" style="color:var(--gold)">priest@spacgh.com</a></div></div></div>
+        <div style="margin-top:20px;border-radius:4px;overflow:hidden">
+          <iframe
+            src="https://maps.google.com/maps?q=HWWC%2B47J,+Nuumo+Borketey+Larweh+st,+Accra&output=embed&z=17"
+            width="100%" height="260" style="border:0;display:block" allowfullscreen loading="lazy"
+            title="St Peter Anglican Church Location"></iframe>
+          <a href="https://maps.app.goo.gl/NWcJxKJR9TpcYyx36" target="_blank"
+            style="display:block;text-align:center;padding:10px;background:var(--purple);color:var(--gold);font-family:var(--fd);font-size:10px;letter-spacing:.14em;text-decoration:none;text-transform:uppercase">
+            📍 Open in Google Maps →
+          </a>
+        </div>
+      </div>
+      <div class="fade-in">
+        <div class="cf-title">Send a Message</div>
+        <label class="cf-label">Your Name</label>
+        <input class="cf-input" type="text" placeholder="Full name" id="cf-name">
+        <label class="cf-label">Email Address</label>
+        <input class="cf-input" type="email" placeholder="your@email.com" id="cf-email">
+        <label class="cf-label">Subject</label>
+        <input class="cf-input" type="text" placeholder="How can we help?" id="cf-subj">
+        <label class="cf-label">Message</label>
+        <textarea class="cf-input" rows="5" placeholder="Your message…" id="cf-msg"></textarea>
+        <button class="btn-p" onclick="submitContact()">Send Message ✦</button>
+      </div>
+    </div>
+  </div></section>
+</div>
+
+<!-- REGISTER PAGE -->
+<div id="pg-register" class="pg">
+  <div class="detail-hero"><div class="con"><div class="dh-inner">
+    <span class="dh-eye">Parish Membership</span>
+    <h1 class="dh-title">Member Registration</h1>
+    <p class="dh-sub">Join the family of St. Peter Anglican Church, Nungua.</p>
+  </div></div></div>
+  <section class="sec"><div class="con reg-con">
+    <div class="reg-progress" id="reg-progress">
+      <div class="reg-dot on">Personal Info</div>
+      <div class="reg-dot">Contact</div>
+      <div class="reg-dot">Anglican History</div>
+      <div class="reg-dot">Photo & Guilds</div>
+    </div>
+
+    <!-- Step 1 -->
+    <div class="reg-step on" id="rs-1">
+      <h3 class="step-title">Personal Information</h3>
+      <div class="form-grid">
+        <div><label class="cf-label">Full Name *</label><input class="cf-input" id="r-fullName" placeholder="As on your ID"></div>
+        <div><label class="cf-label">Date of Birth</label><input class="cf-input" id="r-dob" type="date"></div>
+        <div><label class="cf-label">Gender</label><select class="cf-input" id="r-gender"><option value="">Select...</option><option>Male</option><option>Female</option></select></div>
+        <div><label class="cf-label">Marital Status</label><select class="cf-input" id="r-maritalStatus"><option value="">Select...</option><option>Single</option><option>Married</option><option>Widowed</option><option>Divorced</option></select></div>
+        <div><label class="cf-label">Nationality</label><input class="cf-input" id="r-nationality" placeholder="e.g. Ghanaian"></div>
+        <div><label class="cf-label">Hometown</label><input class="cf-input" id="r-hometown" placeholder="City / Region of origin"></div>
+        <div class="full"><label class="cf-label">Occupation / Profession</label><input class="cf-input" id="r-occupation" placeholder="What do you do?"></div>
+      </div>
+      <div class="step-nav"><button class="btn-p" onclick="regNext(2)">Next →</button></div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="reg-step" id="rs-2">
+      <h3 class="step-title">Contact Details</h3>
+      <div class="form-grid">
+        <div><label class="cf-label">Phone Number *</label><input class="cf-input" id="r-phone" type="tel" placeholder="+233 XX XXX XXXX"></div>
+        <div><label class="cf-label">Email Address</label><input class="cf-input" id="r-email" type="email" placeholder="your@email.com"></div>
+        <div class="full"><label class="cf-label">Home Address</label><input class="cf-input" id="r-address" placeholder="Street, Area, City"></div>
+        <div><label class="cf-label">Emergency Contact Name</label><input class="cf-input" id="r-emergencyContact" placeholder="Next of kin name"></div>
+        <div><label class="cf-label">Emergency Phone</label><input class="cf-input" id="r-emergencyPhone" placeholder="+233 XX XXX XXXX"></div>
+      </div>
+      <div class="step-nav"><button class="btn-o" onclick="regNext(1)">← Back</button><button class="btn-p" onclick="regNext(3)">Next →</button></div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="reg-step" id="rs-3">
+      <h3 class="step-title">Anglican History</h3>
+      <div class="form-grid">
+        <div><label class="cf-label">Have you been Baptized?</label><select class="cf-input" id="r-baptized"><option>No</option><option>Yes</option></select></div>
+        <div><label class="cf-label">Baptism Date</label><input class="cf-input" id="r-baptismDate" type="date"></div>
+        <div class="full"><label class="cf-label">Church of Baptism</label><input class="cf-input" id="r-baptismChurch" placeholder="Name and location of church"></div>
+        <div><label class="cf-label">Have you been Confirmed?</label><select class="cf-input" id="r-confirmed"><option>No</option><option>Yes</option></select></div>
+        <div><label class="cf-label">Confirmed By (Bishop)</label><input class="cf-input" id="r-confirmedBy" placeholder="Bishop's name"></div>
+        <div><label class="cf-label">Date of Confirmation</label><input class="cf-input" id="r-confirmationDate" type="date"></div>
+        <div class="full"><label class="cf-label">Previous / Former Parish</label><input class="cf-input" id="r-prevParish" placeholder="Name of previous church (if any)"></div>
+      </div>
+      <div class="step-nav"><button class="btn-o" onclick="regNext(2)">← Back</button><button class="btn-p" onclick="regNext(4)">Next →</button></div>
+    </div>
+
+    <!-- Step 4 -->
+    <div class="reg-step" id="rs-4">
+      <h3 class="step-title">Photo & Guild Interests</h3>
+      <label class="cf-label" style="text-align:center;display:block;margin-bottom:10px">Passport Photo</label>
+      <div class="photo-area" onclick="document.getElementById('r-photo-input').click()" id="photo-area">
+        <span class="photo-icon">📷</span>
+        <span class="photo-label">Click to upload</span>
+        <input type="file" id="r-photo-input" accept="image/*" style="display:none" onchange="previewPhoto(this)">
+      </div>
+      <label class="cf-label" style="margin-top:20px;margin-bottom:10px;display:block">Guild / Ministry Interests</label>
+      <div class="guild-checks">
+        <label><input type="checkbox" name="guilds" value="Brotherhood of Saint Andrew"> Brotherhood of Saint Andrew</label>
+        <label><input type="checkbox" name="guilds" value="AYPA"> AYPA</label>
+        <label><input type="checkbox" name="guilds" value="Mothers' Union"> Mothers' Union</label>
+        <label><input type="checkbox" name="guilds" value="Good Shepherd"> Good Shepherd</label>
+        <label><input type="checkbox" name="guilds" value="Servers of the Sanctuary"> Servers of the Sanctuary</label>
+        <label><input type="checkbox" name="guilds" value="Women's Fellowship"> Women's Fellowship</label>
+        <label><input type="checkbox" name="guilds" value="Men's Fellowship"> Men's Fellowship</label>
+        <label><input type="checkbox" name="guilds" value="Sacred Heart of Jesus"> Sacred Heart of Jesus</label>
+      </div>
+      <div class="step-nav">
+        <button class="btn-o" onclick="regNext(3)">← Back</button>
+        <button class="btn-p" onclick="submitRegistration()" id="reg-submit-btn">Submit Registration</button>
+      </div>
+    </div>
+
+    <!-- Success -->
+    <div class="reg-step" id="rs-success" style="text-align:center;padding:48px 20px">
+      <div style="font-size:64px;margin-bottom:20px;color:var(--purple)">✝</div>
+      <h2 class="vicar-name">Welcome to St. Peter's!</h2>
+      <p style="font-family:var(--fa);font-size:1.2rem;font-style:italic;color:var(--text2);margin-bottom:28px">Your registration has been received. A PDF has been prepared for you.</p>
+      <div id="pdf-download-link"></div>
+      <div class="vicar-btns" style="justify-content:center;margin-top:20px">
+        <button class="btn-o" onclick="go('home')">← Back to Home</button>
+        <button class="btn-p" onclick="go('contact')">Contact the Parish</button>
+      </div>
+    </div>
+  </div></div></section>
+</div>
+
+<!-- FOOTER -->
+<footer id="site-footer">
+  <div class="con">
+    <div class="ft-grid">
+      <div>
+        <div class="ft-bname">St. Peter Anglican Church</div>
+        <div class="ft-bsub">Nungua, Accra, Ghana · Est. 1940</div>
+        <p class="ft-tag">"If God be for us, who shall be against us?" — Romans 8:31<br><br>Diocese of Accra · Church of the Province of West Africa.</p>
+      </div>
+      <div>
+        <div class="ft-ctitle">The Church</div>
+        <span class="ft-link" onclick="go('about')">About Us</span>
+        <span class="ft-link" onclick="go('worship')">Worship & Liturgy</span>
+        <span class="ft-link" onclick="go('guilds')">Guilds & Ministries</span>
+        <span class="ft-link" onclick="go('sermons')">Sermons</span>
+        <span class="ft-link" onclick="go('bcp')">Prayer Book</span>
+      </div>
+      <div>
+        <div class="ft-ctitle">Connect</div>
+        <span class="ft-link" onclick="go('events')">Upcoming Events</span>
+        <span class="ft-link" onclick="go('media')">Media Feed</span>
+        <span class="ft-link" onclick="go('gallery')">Gallery</span>
+        <span class="ft-link" onclick="go('giving')">Give</span>
+        <span class="ft-link" onclick="go('register')">Join the Parish</span>
+        <span class="ft-link" onclick="go('contact')">Contact</span>
+      </div>
+      <div>
+        <div class="ft-ctitle">Sunday Services</div>
+        <div class="ft-link">1st Service · 6:30 AM (English)</div>
+        <div class="ft-link">2nd Service · 9:00 AM (Mainly Ga)</div>
+        <div class="ft-link">Children's Service · 9:00 AM</div>
+        <div class="ft-link">Holy Communion at every service</div>
+        <div class="ft-emergency">
+          <div class="fte-label">Contact</div>
+          <div class="fte-val">info@stpeternungua.org<br>Nuumo Borketey Larweh St, Nungua</div>
+        </div>
+      </div>
+    </div>
+    <div class="ft-social-row">
+      <a class="ft-sico" href="https://www.facebook.com/8" target="_blank" rel="noopener" aria-label="Facebook">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+      </a>
+      <a class="ft-sico" href="https://www.youtube.com/@StPeterTheRockAnglicanChurchNungua" target="_blank" rel="noopener" aria-label="YouTube">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.95C5.12 20 12 20 12 20s6.88 0 8.59-.47a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="white"/></svg>
+      </a>
+    </div>
+    <div class="ft-btm">
+      <div class="ft-copy">© 2025 St. Peter Anglican Church, Nungua · All Rights Reserved</div>
+      <div class="ft-cross">✝ ✝ ✝</div>
+      <div class="ft-copy">Diocese of Accra · Province of West Africa</div>
+    </div>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div id="modal-bg" onclick="if(event.target===this)closeModal()">
+  <div id="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="modal-inner"></div>
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" onclick="this.style.display='none'" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:9999;display:none;align-items:center;justify-content:center">
+  <img id="lb-img" src="" alt="" style="max-width:92vw;max-height:92vh;object-fit:contain;box-shadow:0 0 60px rgba(0,0,0,.8)">
+</div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<script src="/js/main.js"></script>
+<script src="/js/site-fixes.js"></script>
+</body>
+</html>

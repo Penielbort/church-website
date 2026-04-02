@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel — St. Peter Anglican Church</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cinzel+Decorative:wght@400;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --p:#4B0082;--pd:#2D0050;--pl:#6A1BA0;--r:#8B0000;
+  --g:#C9A227;--gl:#E4BC4A;--gp:#F5E8C0;
+  --bg:#F8F6F2;--card:#fff;--side:#1e1428;--sideh:#2a1c36;
+  --txt:#1a1218;--txt2:#4a3d52;--txm:#7a6a82;
+  --brd:rgba(75,0,130,.14);--tr:.25s ease;
+  --fd:'Cinzel',serif;--fdec:'Cinzel Decorative',serif;--fb:'EB Garamond',serif;
+}
+[data-theme="dark"]{
+  --bg:#130f1a;--card:#1e1828;--txt:#f0eaf8;--txt2:#c8b8d8;--txm:#9080a0;--brd:rgba(201,162,39,.18);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--fb);background:var(--bg);color:var(--txt);min-height:100vh;display:flex;overflow-x:hidden}
+
+/* SIDEBAR */
+#sidebar{width:240px;background:var(--side);min-height:100vh;display:flex;flex-direction:column;flex-shrink:0;position:fixed;top:0;left:0;bottom:0;z-index:100;transition:transform var(--tr)}
+.sb-logo{padding:22px 20px 18px;border-bottom:1px solid rgba(201,162,39,.1)}
+.sb-church{font-family:var(--fdec);font-size:12px;color:var(--g);letter-spacing:.08em}
+.sb-sub{font-family:var(--fb);font-size:10px;color:rgba(255,255,255,.3);font-style:italic;margin-top:2px}
+.sb-user{padding:14px 20px;border-bottom:1px solid rgba(201,162,39,.08);display:flex;align-items:center;gap:10px}
+.sb-av{width:34px;height:34px;border-radius:50%;background:var(--p);display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:13px;font-weight:700;color:var(--g);flex-shrink:0}
+.sb-uname{font-family:var(--fd);font-size:11px;font-weight:600;color:rgba(255,255,255,.8);letter-spacing:.06em}
+.sb-urole{font-family:var(--fb);font-size:10px;color:rgba(255,255,255,.3);font-style:italic}
+.sb-nav{padding:12px 0;flex:1;overflow-y:auto}
+.sb-section{font-family:var(--fd);font-size:7.5px;letter-spacing:.25em;text-transform:uppercase;color:rgba(201,162,39,.4);padding:10px 20px 6px}
+.sb-link{display:flex;align-items:center;gap:10px;padding:10px 20px;font-family:var(--fd);font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.5);border:none;background:none;width:100%;text-align:left;cursor:pointer;transition:all var(--tr);border-left:3px solid transparent}
+.sb-link:hover,.sb-link.on{color:var(--g);background:rgba(201,162,39,.06);border-left-color:var(--g)}
+.sb-link .ico{width:16px;text-align:center;font-size:13px}
+.sb-btm{padding:14px 20px;border-top:1px solid rgba(201,162,39,.08)}
+.sb-logout{display:flex;align-items:center;gap:8px;font-family:var(--fd);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.35);background:none;border:none;cursor:pointer;width:100%;transition:color var(--tr)}
+.sb-logout:hover{color:#ff6b6b}
+
+/* MAIN */
+#main{margin-left:240px;flex:1;min-height:100vh;display:flex;flex-direction:column}
+.topbar{background:var(--card);border-bottom:1.5px solid var(--brd);padding:0 28px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
+.tb-title{font-family:var(--fdec);font-size:1.1rem;color:var(--p)}
+[data-theme="dark"] .tb-title{color:var(--g)}
+.tb-ctrl{display:flex;align-items:center;gap:10px}
+.tb-btn{font-family:var(--fd);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;padding:7px 14px;border:1.5px solid var(--brd);background:none;color:var(--txm);transition:all var(--tr);cursor:pointer}
+.tb-btn:hover{border-color:var(--p);color:var(--p)}
+.tb-btn.pri{background:var(--g);border-color:var(--g);color:#1a0e00}
+.tb-btn.pri:hover{background:var(--gl)}
+.content{padding:28px;flex:1}
+
+/* PANELS */
+.panel{display:none}
+.panel.on{display:block}
+
+/* STAT CARDS */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px}
+.stat-card{background:var(--card);border:1px solid var(--brd);padding:20px;position:relative;overflow:hidden}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.sc-p::before{background:linear-gradient(90deg,var(--p),var(--pl))}
+.sc-g::before{background:linear-gradient(90deg,var(--g),var(--gl))}
+.sc-r::before{background:linear-gradient(90deg,var(--r),#cc0000)}
+.sc-tl::before{background:linear-gradient(90deg,#006688,#0099cc)}
+.stat-n{font-family:var(--fdec);font-size:2rem;color:var(--p);line-height:1;margin-bottom:4px}
+[data-theme="dark"] .stat-n{color:var(--g)}
+.stat-l{font-family:var(--fd);font-size:8.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--txm)}
+.stat-ico{position:absolute;top:14px;right:14px;font-size:22px;opacity:.2}
+
+/* TABLE */
+.tbl-wrap{background:var(--card);border:1px solid var(--brd);overflow:hidden}
+.tbl-head{padding:14px 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--brd);flex-wrap:wrap;gap:8px}
+.tbl-title{font-family:var(--fd);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--p)}
+[data-theme="dark"] .tbl-title{color:var(--g)}
+.tbl-search{font-family:var(--fb);font-size:.9rem;padding:6px 12px;background:var(--bg);border:1px solid var(--brd);color:var(--txt);outline:none;width:220px}
+.tbl-search:focus{border-color:var(--p)}
+table{width:100%;border-collapse:collapse}
+th{font-family:var(--fd);font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--txm);padding:10px 14px;text-align:left;background:var(--bg);border-bottom:1px solid var(--brd)}
+td{font-family:var(--fb);font-size:.92rem;color:var(--txt2);padding:11px 14px;border-bottom:1px solid var(--brd)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--gp)}
+.badge{font-family:var(--fd);font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:3px 9px;border-radius:2px}
+.badge-pend{background:rgba(201,162,39,.15);color:#9a7600}
+.badge-ok{background:rgba(0,100,0,.1);color:#006400}
+.badge-rej{background:rgba(139,0,0,.1);color:var(--r)}
+.act-btn{font-family:var(--fd);font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border:1.5px solid;cursor:pointer;background:none;transition:all var(--tr)}
+.act-view{border-color:var(--p);color:var(--p)}
+.act-view:hover{background:var(--p);color:var(--g)}
+.act-del{border-color:var(--r);color:var(--r)}
+.act-del:hover{background:var(--r);color:#fff}
+
+/* FORM */
+.form-sec{background:var(--card);border:1px solid var(--brd);padding:24px;margin-bottom:24px}
+.form-sec-title{font-family:var(--fd);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--p);margin-bottom:18px;padding-bottom:10px;border-bottom:1px solid var(--brd)}
+[data-theme="dark"] .form-sec-title{color:var(--g)}
+.fg{display:grid;gap:14px}
+.fg-2{grid-template-columns:1fr 1fr}
+.fg-3{grid-template-columns:1fr 1fr 1fr}
+.fl{font-family:var(--fd);font-size:8.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--txm);display:block;margin-bottom:6px}
+.fi{width:100%;background:var(--bg);border:1.5px solid var(--brd);color:var(--txt);padding:9px 12px;font-family:var(--fb);font-size:.95rem;outline:none;transition:border-color var(--tr)}
+.fi:focus{border-color:var(--p)}
+.fi::placeholder{color:var(--txm)}
+textarea.fi{min-height:100px;resize:vertical}
+select.fi option{background:var(--bg)}
+
+/* MODAL */
+#a-modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9999;display:none;align-items:center;justify-content:center;padding:20px}
+#a-modal-bg.open{display:flex}
+#a-modal-box{background:var(--card);max-width:680px;width:100%;max-height:88vh;overflow-y:auto;position:relative}
+.a-modal-hdr{background:linear-gradient(135deg,var(--pd),var(--p));padding:22px 24px;display:flex;align-items:flex-start;justify-content:space-between}
+.a-modal-title{font-family:var(--fdec);font-size:1.2rem;color:#fff;line-height:1.2}
+.a-modal-close{background:none;border:none;color:rgba(255,255,255,.5);font-size:20px;cursor:pointer;transition:color var(--tr);flex-shrink:0;margin-left:14px}
+.a-modal-close:hover{color:#fff}
+.a-modal-body{padding:22px 24px}
+
+/* TOAST */
+#a-toast{position:fixed;bottom:20px;right:20px;background:var(--p);color:var(--g);font-family:var(--fd);font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:10px 20px;border:1px solid rgba(201,162,39,.3);z-index:99999;opacity:0;transform:translateY(8px);transition:all .3s;pointer-events:none}
+#a-toast.show{opacity:1;transform:translateY(0)}
+
+/* UPLOAD AREA */
+.upload-area{border:2px dashed var(--brd);padding:32px;text-align:center;cursor:pointer;transition:border-color var(--tr);background:var(--bg)}
+.upload-area:hover{border-color:var(--g)}
+.upload-icon{font-size:32px;opacity:.4;margin-bottom:8px}
+.upload-label{font-family:var(--fd);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--txm)}
+
+/* SECTION HEADER */
+.sec-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;flex-wrap:wrap;gap:12px}
+.sec-h-title{font-family:var(--fdec);font-size:1.4rem;color:var(--p)}
+[data-theme="dark"] .sec-h-title{color:var(--g)}
+
+/* SPINNER */
+.spinner{width:16px;height:16px;border:2px solid rgba(201,162,39,.3);border-top-color:var(--g);border-radius:50%;animation:spin .7s linear infinite;display:inline-block;vertical-align:middle;margin-right:6px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  #sidebar{transform:translateX(-240px)}
+  #sidebar.mob-open{transform:translateX(0)}
+  #main{margin-left:0}
+  #mob-sb-btn{display:flex!important}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:480px){
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .content{padding:16px}
+  .fg-2,.fg-3{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside id="sidebar">
+  <div class="sb-logo">
+    <img src="/images/logo.png" alt="St. Peter Anglican" style="width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid rgba(201,162,39,.5);margin-bottom:8px">
+    <div class="sb-church">St. Peter Anglican</div>
+    <div class="sb-sub">Nungua · Accra · Ghana</div>
+  </div>
+  <div class="sb-user" id="sb-user">
+    <div class="sb-av" id="sb-av">V</div>
+    <div>
+      <div class="sb-uname" id="sb-uname">Loading…</div>
+      <div class="sb-urole" id="sb-urole">—</div>
+    </div>
+  </div>
+  <!-- Session timer -->
+  <div id="session-bar" style="padding:6px 20px;background:rgba(201,162,39,.06);border-bottom:1px solid rgba(201,162,39,.08);font-family:'Cinzel',serif;font-size:9px;letter-spacing:.08em;color:rgba(255,255,255,.3);display:flex;align-items:center;gap:6px">
+    <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    Session: <span id="session-timer" style="color:rgba(201,162,39,.6)">30:00</span>
+  </div>
+  <nav class="sb-nav">
+    <div class="sb-section">Overview</div>
+    <button class="sb-link on" onclick="showPanel('dashboard')"><span class="ico"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="18" y="3" width="4" height="18"/><rect x="10" y="8" width="4" height="13"/><rect x="2" y="13" width="4" height="8"/></svg></span>Dashboard</button>
+    <div class="sb-section">Content</div>
+    <button class="sb-link" onclick="showPanel('posts')"><span class="ico"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></span>Media Posts</button>
+    <button class="sb-link" onclick="showPanel('sermons')"><span class="ico"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>Sermons</button>
+    <button class="sb-link" onclick="showPanel('events')"><span class="ico"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>Events</button>
+    <button class="sb-link" onclick="showPanel('gallery')"><span class="ico"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></span>Gallery</button>
+    <button class="sb-link" onclick="showPanel('site-photos')"><span class="ico"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="22" x2="21" y2="22"/><line x1="6" y1="18" x2="6" y2="11"/><line x1="10" y1="18" x2="10" y2="11"/><line x1="14" y1="18" x2="14" y2="11"/><line x1="18" y1="18" x2="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg></span>Site Photos</button>
+    <div class="sb-section">People</div>
+    <button class="sb-link" onclick="showPanel('members')"><span class="ico"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>Members</button>
+    <button class="sb-link" onclick="showPanel('submissions')"><span class="ico"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span>Submissions</button>
+    <div class="sb-section">System</div>
+    <button class="sb-link rb-superadmin rb-editor" onclick="showPanel('settings')"><span class="ico"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span>Settings</button>
+    <button class="sb-link rb-superadmin" onclick="showPanel('admins')"><span class="ico"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg></span>Admin Users</button>
+  </nav>
+  <div class="sb-btm">
+    <button class="sb-logout" onclick="logout()">⏻ &nbsp;Sign Out</button>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<div id="main">
+  <header class="topbar">
+    <div style="display:flex;align-items:center;gap:12px"><button class="tb-btn" id="mob-sb-btn" onclick="toggleSidebar()" style="display:none;font-size:18px;padding:6px 10px">☰</button><div class="tb-title" id="tb-title">Dashboard</div></div>
+    <div class="tb-ctrl">
+      <button class="tb-btn" onclick="toggleDark()">🌙</button>
+      <a href="/" target="_blank"><button class="tb-btn">🌐 View Site</button></a>
+      <button class="tb-btn pri" id="tb-action" style="display:none">+ Add New</button>
+    </div>
+  </header>
+
+  <div class="content">
+
+    <!-- DASHBOARD -->
+    <div class="panel on" id="panel-dashboard">
+      <div class="stats-grid" id="stats-grid">
+        <div class="stat-card sc-p"><div class="stat-ico"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div><div class="stat-n" id="st-posts">–</div><div class="stat-l">Active Posts</div></div>
+        <div class="stat-card sc-g"><div class="stat-ico">❤️</div><div class="stat-n" id="st-likes">–</div><div class="stat-l">Total Likes</div></div>
+        <div class="stat-card sc-tl"><div class="stat-ico"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div class="stat-n" id="st-members">–</div><div class="stat-l">Members</div></div>
+        <div class="stat-card sc-r"><div class="stat-ico"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div class="stat-n" id="st-msgs">–</div><div class="stat-l">Unread Messages</div></div>
+        <div class="stat-card sc-g"><div class="stat-ico">📖</div><div class="stat-n" id="st-sermons">–</div><div class="stat-l">Sermons</div></div>
+        <div class="stat-card sc-p"><div class="stat-ico"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><div class="stat-n" id="st-events">–</div><div class="stat-l">Active Events</div></div>
+        <div class="stat-card sc-tl"><div class="stat-ico"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div><div class="stat-n" id="st-gallery">–</div><div class="stat-l">Gallery Photos</div></div>
+        <div class="stat-card sc-r"><div class="stat-ico">💛</div><div class="stat-n" id="st-donations">–</div><div class="stat-l">Donations Recorded</div></div>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--brd);padding:22px">
+        <div style="font-family:var(--fd);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--p);margin-bottom:14px">Quick Actions</div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button class="tb-btn pri" onclick="showPanel('posts');openAddPost()">+ New Post</button>
+          <button class="tb-btn pri" onclick="showPanel('sermons');openAddSermon()">+ New Sermon</button>
+          <button class="tb-btn pri" onclick="showPanel('events');openAddEvent()">+ New Event</button>
+          <button class="tb-btn pri" onclick="showPanel('gallery')">+ Upload Photos</button>
+          <button class="tb-btn" onclick="exportData()">⬇ Export Data</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- POSTS -->
+    <div class="panel" id="panel-posts">
+      <div class="sec-header">
+        <div class="sec-h-title">Media Posts</div>
+        <button class="tb-btn pri" onclick="openAddPost()">+ New Post</button>
+      </div>
+      <div class="tbl-wrap">
+        <div class="tbl-head">
+          <div class="tbl-title">All Posts</div>
+        </div>
+        <div id="posts-table-body"></div>
+      </div>
+    </div>
+
+    <!-- SERMONS -->
+    <div class="panel" id="panel-sermons">
+      <div class="sec-header">
+        <div class="sec-h-title">Sermons</div>
+        <button class="tb-btn pri" onclick="openAddSermon()">+ New Sermon</button>
+      </div>
+      <div class="tbl-wrap">
+        <div class="tbl-head"><div class="tbl-title">All Sermons</div></div>
+        <div id="sermons-table-body"></div>
+      </div>
+    </div>
+
+    <!-- EVENTS -->
+    <div class="panel" id="panel-events">
+      <div class="sec-header">
+        <div class="sec-h-title">Events</div>
+        <button class="tb-btn pri" onclick="openAddEvent()">+ New Event</button>
+      </div>
+      <div class="tbl-wrap">
+        <div class="tbl-head"><div class="tbl-title">All Events</div></div>
+        <div id="events-table-body"></div>
+      </div>
+    </div>
+
+    <!-- GALLERY -->
+    <!-- SITE PHOTOS PANEL -->
+    <div class="panel" id="panel-site-photos">
+      <div class="panel-hdr">
+        <div class="panel-title">Site Photos</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="tb-btn pri" onclick="document.getElementById('hero-upload').click()">+ Add Hero Slide</button>
+          <input type="file" id="hero-upload" accept="image/*" multiple style="display:none" onchange="uploadHeroSlide(this)">
+        </div>
+      </div>
+      <p style="font-family:var(--fb);font-size:.9rem;color:var(--txm);margin-bottom:16px">Manage the hero slideshow photos on the home page. Photos slide every minute.</p>
+      <div id="hero-slides-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px"></div>
+    </div>
+
+    <div class="panel" id="panel-gallery">
+      <div class="sec-header">
+        <div class="sec-h-title">Gallery</div>
+      </div>
+      <div class="form-sec">
+        <div class="form-sec-title">Upload New Photos</div>
+        <div class="upload-area" onclick="document.getElementById('gal-upload').click()">
+          <div class="upload-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>
+          <div class="upload-label">Click to select images (multiple allowed)</div>
+          <input type="file" id="gal-upload" accept="image/*" multiple style="display:none" onchange="uploadGallery(this)">
+        </div>
+        <div id="gal-preview" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"></div>
+      </div>
+      <div class="tbl-wrap">
+        <div class="tbl-head"><div class="tbl-title">Gallery Photos</div></div>
+        <div id="gallery-grid-admin" style="display:grid;grid-template-columns:repeat(4,1fr);gap:3px;padding:3px"></div>
+      </div>
+    </div>
+
+    <!-- MEMBERS -->
+    <div class="panel" id="panel-members">
+      <div class="sec-header">
+        <div class="sec-h-title">Parish Members</div>
+        <input type="text" class="tbl-search" placeholder="Search members…" id="member-search" oninput="searchMembers()">
+      </div>
+      <div class="tbl-wrap">
+        <div class="tbl-head"><div class="tbl-title">All Registrations</div></div>
+        <div id="members-table-body"></div>
+      </div>
+    </div>
+
+    <!-- SUBMISSIONS -->
+    <div class="panel" id="panel-submissions">
+      <div class="sec-header">
+        <div class="sec-h-title">Submissions</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <button class="tb-btn on" onclick="filterSubs(this,'')">All</button>
+          <button class="tb-btn" onclick="filterSubs(this,'contact')">Messages</button>
+          <button class="tb-btn" onclick="filterSubs(this,'registration')">Event Regs</button>
+          <button class="tb-btn" onclick="filterSubs(this,'donation')">Donations</button>
+          <button class="tb-btn" onclick="filterSubs(this,'guild')">Guild Apps</button>
+        </div>
+      </div>
+      <div class="tbl-wrap">
+        <div class="tbl-head"><div class="tbl-title">All Submissions</div></div>
+        <div id="subs-table-body"></div>
+      </div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div class="panel" id="panel-settings">
+      <div class="sec-header"><div class="sec-h-title">Site Settings</div></div>
+      <div style="background:rgba(201,162,39,.08);border:1px solid rgba(201,162,39,.2);padding:12px 18px;margin-bottom:20px;font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:.08em;color:var(--g)">
+        ✦ Settings can only be changed by Super Admins. To publish a Weekly Word, use <strong>Media Posts → New Post → Mark as Weekly Word</strong>.
+      </div>
+      <div class="form-sec" id="settings-form">
+        <div class="form-sec-title">Church Information</div>
+        <div class="fg fg-2">
+          <div><label class="fl">Church Name</label><input class="fi" id="set-church_name"></div>
+          <div><label class="fl">Location</label><input class="fi" id="set-church_location"></div>
+          <div><label class="fl">Phone</label><input class="fi" id="set-church_phone"></div>
+          <div><label class="fl">Email</label><input class="fi" id="set-church_email"></div>
+          <div><label class="fl">Service Time 1</label><input class="fi" id="set-service_time_1"></div>
+          <div><label class="fl">Service Time 2</label><input class="fi" id="set-service_time_2"></div>
+          <div><label class="fl">Service Time 3</label><input class="fi" id="set-service_time_3"></div>
+        </div>
+        <button class="tb-btn pri" style="margin-top:16px" onclick="saveSettings()">Save Settings</button>
+      </div>
+    </div>
+
+    <!-- ADMINS -->
+    <div class="panel" id="panel-admins">
+      <div class="sec-header">
+        <div class="sec-h-title">Admin Users</div>
+        <button class="tb-btn pri" onclick="openAddAdmin()">+ Add Admin</button>
+      </div>
+      <!-- Role guide -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:22px">
+        <div style="background:var(--card);border:1px solid var(--brd);padding:14px 16px;border-top:3px solid #4B0082">
+          <div style="font-family:var(--fd);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#4B0082;margin-bottom:6px">Super Admin</div>
+          <div style="font-family:var(--fb);font-size:.85rem;color:var(--txt2);line-height:1.6">Full access. Manage all content, settings, admins, donations, members, and exports.</div>
+        </div>
+        <div style="background:var(--card);border:1px solid var(--brd);padding:14px 16px;border-top:3px solid #006688">
+          <div style="font-family:var(--fd);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#006688;margin-bottom:6px">Editor</div>
+          <div style="font-family:var(--fb);font-size:.85rem;color:var(--txt2);line-height:1.6">Create and delete posts, sermons, events. Approve members. Cannot manage settings or admin users.</div>
+        </div>
+        <div style="background:var(--card);border:1px solid var(--brd);padding:14px 16px;border-top:3px solid #8B6914">
+          <div style="font-family:var(--fd);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#8B6914;margin-bottom:6px">Media</div>
+          <div style="font-family:var(--fb);font-size:.85rem;color:var(--txt2);line-height:1.6">Upload gallery photos and hero slides only. Read-only access to all other sections.</div>
+        </div>
+      </div>
+      <div class="tbl-wrap">
+        <div class="tbl-head"><div class="tbl-title">All Administrators</div></div>
+        <div id="admins-table-body"></div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+
+<!-- MODAL -->
+<div id="a-modal-bg" onclick="if(event.target===this)closeAModal()">
+  <div id="a-modal-box">
+    <div class="a-modal-hdr">
+      <div class="a-modal-title" id="a-modal-title">Modal</div>
+      <button class="a-modal-close" onclick="closeAModal()">✕</button>
+    </div>
+    <div class="a-modal-body" id="a-modal-body"></div>
+  </div>
+</div>
+<div id="a-toast"></div>
+
+<script>
+// Auth guard — redirect to login if no token
+(function() {
+  if (!localStorage.getItem('admin_token') && !document.cookie.includes('admin_token')) {
+    window.location.href = '/login';
+  }
+})();
+
+// Store token in localStorage so page survives refresh
+(function() {
+  const params = new URLSearchParams(window.location.search);
+  const t = params.get('token');
+  if (t) { localStorage.setItem('admin_token', t); history.replaceState(null,'','/admin'); }
+})();
+
+const getAuthHeaders = (isFormData) => {
+  const token = localStorage.getItem('admin_token');
+  const h = {};
+  if (!isFormData) h['Content-Type'] = 'application/json';
+  if (token) h['Authorization'] = 'Bearer ' + token;
+  return h;
+};
+function handle401() {
+  localStorage.removeItem('admin_token');
+  toast('Session expired. Please log in again.', true);
+  setTimeout(() => { window.location.href = '/login'; }, 2200);
+}
+const API = async (path, opts) => {
+  const isFormData = opts?.body instanceof FormData;
+  const headers = { ...getAuthHeaders(isFormData), ...(opts?.headers||{}) };
+  if (isFormData) delete headers['Content-Type'];
+  try {
+    const res = await fetch('/admin/api' + path, { ...opts, headers });
+    if (res.status === 401) { handle401(); return res; }
+    return res;
+  } catch(e) {
+    toast('Network error — check server is running.', true);
+    throw e;
+  }
+};
+const UPLOAD = async (path, fd) => {
+  const token = localStorage.getItem('admin_token');
+  const headers = {};
+  if (token) headers['Authorization'] = 'Bearer ' + token;
+  try {
+    const res = await fetch('/admin/api' + path, { method: 'POST', body: fd, headers });
+    if (res.status === 401) { handle401(); return res; }
+    return res;
+  } catch(e) {
+    toast('Upload failed — check server is running.', true);
+    throw e;
+  }
+};
+
+// ── BOOT ──
+let currentAdminRole = 'viewer';
+document.addEventListener('DOMContentLoaded', async () => {
+  // Verify token is valid before loading anything
+  try {
+    const check = await fetch('/admin/api/stats', { headers: getAuthHeaders() });
+    if (check.status === 401) {
+      if (!localStorage.getItem('admin_token')) { handle401(); return; }
+      handle401(); return;
+    }
+  } catch(e) { /* server may be starting — continue anyway */ }
+  // Load role
+  try {
+    const me = await fetch('/admin/api/me', { headers: getAuthHeaders() });
+    if (me.ok) { const d = await me.json(); if (d.admin) { currentAdminRole = d.admin.role; applyRBAC(currentAdminRole); } }
+  } catch(_) {}
+  await loadStats();
+  loadPosts(); loadSermons(); loadEvents();
+  loadGallery(); loadMembers(); loadSubmissions();
+  loadSettings(); loadAdmins(); loadHeroSlides();
+  restoreTheme();
+  startSessionTimer();
+  startInactivityTimer();
+});
+
+// ── RBAC UI ──
+function applyRBAC(role) {
+  // Hide sidebar links not accessible to role
+  if (role !== 'superadmin') {
+    document.querySelectorAll('.rb-superadmin').forEach(el => el.style.display = 'none');
+  }
+  // Show role badge colour
+  const roleEl = document.getElementById('sb-urole');
+  if (roleEl) {
+    const colors = { superadmin:'#C9A227', editor:'#0099cc', media:'#8B6914', viewer:'rgba(255,255,255,.3)' };
+    roleEl.style.color = colors[role] || 'rgba(255,255,255,.3)';
+  }
+}
+function canDo(action) {
+  const perms = {
+    superadmin: ['all'],
+    editor:     ['posts','sermons','events','gallery','members','submissions'],
+    media:      ['gallery_upload'],
+    viewer:     [],
+  };
+  const p = perms[currentAdminRole] || [];
+  return p.includes('all') || p.includes(action);
+}
+
+// ── SESSION TIMER (30 min absolute, 10 min inactivity) ──
+const SESSION_MS   = 30 * 60 * 1000;
+const INACTIVITY_MS = 10 * 60 * 1000;
+let sessionStart   = Date.now();
+let lastActivity   = Date.now();
+let sessionInterval, inactivityInterval;
+
+function startSessionTimer() {
+  sessionInterval = setInterval(() => {
+    const remaining = SESSION_MS - (Date.now() - sessionStart);
+    if (remaining <= 0) { forceLogout('Session expired after 30 minutes.'); return; }
+    const m = Math.floor(remaining / 60000);
+    const s = Math.floor((remaining % 60000) / 1000);
+    const el = document.getElementById('session-timer');
+    if (el) {
+      el.textContent = `${m}:${s.toString().padStart(2,'0')}`;
+      el.style.color = remaining < 5 * 60000 ? '#ff6b6b' : 'rgba(201,162,39,.6)';
+    }
+  }, 1000);
+}
+
+function startInactivityTimer() {
+  const events = ['mousemove','keydown','click','scroll','touchstart'];
+  events.forEach(e => document.addEventListener(e, () => { lastActivity = Date.now(); }, { passive: true }));
+  inactivityInterval = setInterval(() => {
+    if (Date.now() - lastActivity > INACTIVITY_MS) {
+      forceLogout('Logged out due to 10 minutes of inactivity.');
+    }
+  }, 30000); // check every 30s
+}
+
+function forceLogout(msg) {
+  clearInterval(sessionInterval);
+  clearInterval(inactivityInterval);
+  localStorage.removeItem('admin_token');
+  toast(msg, true);
+  setTimeout(() => { window.location.href = '/auth/logout'; }, 2200);
+}
+
+// ── DARK MODE ──
+function toggleDark() {
+  const d = document.documentElement.getAttribute('data-theme') === 'dark';
+  document.documentElement.setAttribute('data-theme', d ? 'light' : 'dark');
+  localStorage.setItem('a_theme', d ? 'light' : 'dark');
+}
+function restoreTheme() {
+  const t = localStorage.getItem('a_theme');
+  if (t) document.documentElement.setAttribute('data-theme', t);
+}
+
+// ── PANELS ──
+function showPanel(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('on'));
+  document.querySelectorAll('.sb-link').forEach(l => l.classList.remove('on'));
+  document.getElementById('panel-' + id).classList.add('on');
+  document.querySelector(`.sb-link[onclick*="'${id}'"]`)?.classList.add('on');
+  const titles = { dashboard:'Dashboard', posts:'Media Posts', sermons:'Sermons', events:'Events', gallery:'Gallery', 'site-photos':'Site Photos', members:'Members', submissions:'Submissions', settings:'Settings', admins:'Admin Users' };
+  document.getElementById('tb-title').textContent = titles[id] || id;
+}
+
+// ── TOAST ──
+let tTimer;
+function toast(msg, err) {
+  const t = document.getElementById('a-toast');
+  t.textContent = msg;
+  t.style.background = err ? '#8B0000' : '#4B0082';
+  t.classList.add('show');
+  clearTimeout(tTimer);
+  tTimer = setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ── MODAL ──
+function openAModal(title, html) {
+  document.getElementById('a-modal-title').textContent = title;
+  document.getElementById('a-modal-body').innerHTML = html;
+  document.getElementById('a-modal-bg').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeAModal() {
+  document.getElementById('a-modal-bg').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ── HTML HELPERS ──
+function esc(s) { return s == null ? '' : String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function fdate(ts) { return ts ? new Date(ts).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}) : '—'; }
+
+// ── STATS ──
+async function loadStats() {
+  const r = await API('/stats').catch(()=>null);
+  if (!r || !r.ok) return;
+  const d = await r.json();
+  document.getElementById('st-posts').textContent = d.activePosts ?? 0;
+  document.getElementById('st-likes').textContent = d.totalLikes ?? 0;
+  document.getElementById('st-members').textContent = d.totalMembers ?? 0;
+  document.getElementById('st-msgs').textContent = d.unreadMessages ?? 0;
+  document.getElementById('st-sermons').textContent = d.totalSermons ?? 0;
+  document.getElementById('st-events').textContent = d.totalEvents ?? 0;
+  document.getElementById('st-gallery').textContent = d.totalGallery ?? 0;
+  document.getElementById('st-donations').textContent = d.totalDonations ?? 0;
+  if (d.admin) {
+    document.getElementById('sb-uname').textContent = d.admin.name;
+    document.getElementById('sb-urole').textContent = d.admin.role;
+    document.getElementById('sb-av').textContent = (d.admin.name || 'A').charAt(0).toUpperCase();
+  }
+}
+
+// ── POSTS ──
+let allPosts = [];
+async function loadPosts() {
+  const r = await API('/posts').catch(()=>null);
+  if (!r || !r.ok) return;
+  allPosts = await r.json();
+  renderPostsTable();
+}
+function renderPostsTable() {
+  const el = document.getElementById('posts-table-body');
+  if (!allPosts.length) { el.innerHTML = '<p style="padding:20px;text-align:center;color:var(--txm);font-style:italic">No posts yet.</p>'; return; }
+  el.innerHTML = `<table><thead><tr><th>Author</th><th>Caption</th><th>Type</th><th>Likes</th><th>Comments</th><th>Expires</th><th>Status</th><th>Actions</th></tr></thead><tbody>` +
+    allPosts.map(p => `<tr>
+      <td style="font-family:var(--fd);font-size:11px">${esc(p.author)}</td>
+      <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(p.caption)}</td>
+      <td><span class="badge badge-pend">${esc(p.type||'photo')}</span>${p.is_pinned?'<span class="badge" style="margin-left:4px;background:rgba(201,162,39,.15);color:#9a7600">📌</span>':''}</td>
+      <td>♥ ${p.like_count||0}</td>
+      <td><button class="act-btn act-view" style="font-size:8px;padding:3px 8px" onclick="viewPostComments('${esc(p.id)}')">${p.comment_count||0} comments</button></td>
+      <td>${fdate(p.expires_at)}</td>
+      <td><span class="badge ${p.active?'badge-ok':'badge-rej'}">${p.active?'Active':'Hidden'}</span></td>
+      <td style="display:flex;gap:5px;flex-wrap:wrap">
+        <button class="act-btn act-view" onclick="editPost('${esc(p.id)}')">Edit</button>
+        <button class="act-btn" style="border-color:var(--p);color:var(--p)" onclick="togglePost('${esc(p.id)}',${p.active?0:1})">${p.active?'Hide':'Show'}</button>
+        <button class="act-btn act-del" onclick="deletePost('${esc(p.id)}')">Delete</button>
+      </td>
+    </tr>`).join('') + '</tbody></table>';
+}
+
+function openAddPost() {
+  openAModal('New Media Post', `
+    <div class="fg" style="gap:12px">
+      <div><label class="fl">Author Name</label><input class="fi" id="np-author" placeholder="e.g. The Venerable Vicar" value="The Venerable Vicar"></div>
+      <div><label class="fl">Caption / Message *</label><textarea class="fi" id="np-caption" rows="4" placeholder="Write the post caption…"></textarea></div>
+      <div><label class="fl">Image (optional)</label>
+        <div class="upload-area" onclick="document.getElementById('np-img').click()">
+          <div class="upload-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div><div class="upload-label">Click to upload image</div>
+          <input type="file" id="np-img" accept="image/*" style="display:none" onchange="previewPostImg(this)">
+        </div>
+        <img id="np-preview" style="display:none;max-height:120px;margin-top:8px;object-fit:cover">
+      </div>
+      <div class="fg fg-2">
+        <div><label class="fl">Category</label><select class="fi" id="np-cat"><option value="photo">Photo</option><option value="pinned">Pinned</option><option value="ww">Weekly Word</option></select></div>
+        <div><label class="fl">Expire after (days)</label><input class="fi" id="np-days" type="number" value="7" min="1" max="30"></div>
+      </div>
+      <div style="display:flex;gap:10px">
+        <label style="display:flex;align-items:center;gap:6px;font-family:var(--fd);font-size:9.5px;color:var(--txm);cursor:pointer"><input type="checkbox" id="np-pin"> Pin this post</label>
+        <label style="display:flex;align-items:center;gap:6px;font-family:var(--fd);font-size:9.5px;color:var(--txm);cursor:pointer"><input type="checkbox" id="np-ww"> Mark as Weekly Word</label>
+      </div>
+      <button class="tb-btn pri" onclick="submitPost()">✦ Publish Post</button>
+    </div>
+  `);
+}
+function previewPostImg(input) {
+  if (!input.files?.[0]) return;
+  const preview = document.getElementById('np-preview');
+  const reader = new FileReader();
+  reader.onload = e => { preview.src = e.target.result; preview.style.display = 'block'; };
+  reader.readAsDataURL(input.files[0]);
+}
+async function submitPost() {
+  const caption = document.getElementById('np-caption')?.value?.trim();
+  if (!caption) { toast('Caption is required', true); return; }
+  const fd = new FormData();
+  fd.append('caption', caption);
+  fd.append('author', document.getElementById('np-author')?.value || 'The Venerable Vicar');
+  fd.append('category', document.getElementById('np-cat')?.value || 'photo');
+  fd.append('expireDays', document.getElementById('np-days')?.value || '7');
+  fd.append('isPinned', document.getElementById('np-pin')?.checked ? '1' : '0');
+  fd.append('isWeeklyWord', document.getElementById('np-ww')?.checked ? '1' : '0');
+  const img = document.getElementById('np-img');
+  if (img?.files?.[0]) fd.append('image', img.files[0]);
+  const r = await UPLOAD('/posts', fd);
+  const d = await r.json();
+  if (d.success) { toast('Post published'); closeAModal(); loadPosts(); loadStats(); }
+  else toast(d.error || 'Failed', true);
+}
+async function togglePost(id, active) {
+  await API('/posts/' + id, { method: 'PUT', body: JSON.stringify({ active }) });
+  toast(active ? 'Post shown' : 'Post hidden'); loadPosts();
+}
+async function deletePost(id) {
+  if (!confirm('Delete this post and all its likes/comments?')) return;
+  await API('/posts/' + id, { method: 'DELETE' });
+  toast('Post deleted'); loadPosts(); loadStats();
+}
+function editPost(id) {
+  const p = allPosts.find(x => String(x.id) === String(id));
+  if (!p) return;
+  openAModal('Edit Post', `
+    <div class="fg" style="gap:12px">
+      <div><label class="fl">Author Name</label><input class="fi" id="ep-author" value="${esc(p.author)}"></div>
+      <div><label class="fl">Caption / Message *</label><textarea class="fi" id="ep-caption" rows="4">${esc(p.caption)}</textarea></div>
+      <div class="fg fg-2">
+        <div><label class="fl">Type</label><select class="fi" id="ep-type">
+          <option value="photo" ${p.type==='photo'?'selected':''}>Photo</option>
+          <option value="pinned" ${p.type==='pinned'?'selected':''}>Pinned</option>
+          <option value="ww" ${p.type==='ww'?'selected':''}>Weekly Word</option>
+        </select></div>
+      </div>
+      <div style="display:flex;gap:10px">
+        <label style="display:flex;align-items:center;gap:6px;font-family:var(--fd);font-size:9.5px;color:var(--txm);cursor:pointer"><input type="checkbox" id="ep-pin" ${p.is_pinned?'checked':''}> Pin this post</label>
+      </div>
+      <button class="tb-btn pri" onclick="submitEditPost('${esc(p.id)}')">✦ Save Changes</button>
+    </div>
+  `);
+}
+async function submitEditPost(id) {
+  const caption = document.getElementById('ep-caption')?.value?.trim();
+  if (!caption) { toast('Caption is required', true); return; }
+  const fd = new FormData();
+  fd.append('caption', caption);
+  fd.append('author', document.getElementById('ep-author')?.value || '');
+  fd.append('category', document.getElementById('ep-type')?.value || 'photo');
+  fd.append('isPinned', document.getElementById('ep-pin')?.checked ? '1' : '0');
+  // Use PUT with JSON for edit
+  const r = await API('/posts/' + id, { method: 'PUT', body: JSON.stringify({
+    caption, author: document.getElementById('ep-author')?.value,
+    type: document.getElementById('ep-type')?.value,
+    pinned: document.getElementById('ep-pin')?.checked ? 1 : 0,
+    active: 1
+  }) });
+  const d = await r.json();
+  if (d.success) { toast('Post updated'); closeAModal(); loadPosts(); }
+  else toast(d.error || 'Failed', true);
+}
+async function viewPostComments(postId) {
+  const r = await API('/posts/' + postId + '/comments');
+  const comments = await r.json();
+  openAModal('Post Comments', comments.length
+    ? comments.map(c => `<div style="padding:10px 0;border-bottom:1px solid var(--brd);font-family:var(--fb)"><strong style="font-family:var(--fd);font-size:10px;color:var(--p)">${esc(c.user_name)}</strong> — ${esc(c.text)}<br><span style="font-size:.8rem;color:var(--txm)">${fdate(c.created_at)}</span> <button class="act-btn act-del" style="float:right;font-size:9px;padding:2px 8px" onclick="deleteComment('${c.id}')">Del</button></div>`).join('')
+    : '<p style="color:var(--txm);font-style:italic">No comments yet.</p>'
+  );
+}
+async function deleteComment(id) {
+  await API('/comments/' + id, { method: 'DELETE' });
+  toast('Comment deleted');
+}
+
+// ── SERMONS ──
+let allSermons = [];
+async function loadSermons() {
+  const r = await API('/sermons').catch(()=>null);
+  if (!r || !r.ok) return;
+  allSermons = await r.json();
+  renderSermonsTable();
+}
+function renderSermonsTable() {
+  const el = document.getElementById('sermons-table-body');
+  if (!allSermons.length) { el.innerHTML = '<p style="padding:20px;text-align:center;color:var(--txm);font-style:italic">No sermons yet.</p>'; return; }
+  el.innerHTML = `<table><thead><tr><th>Date</th><th>Title</th><th>Preacher</th><th>Scripture</th><th>Audio</th><th>Actions</th></tr></thead><tbody>` +
+    allSermons.map(s => `<tr>
+      <td>${esc(s.day||'')} ${esc(s.month_year||'')}</td>
+      <td style="font-family:var(--fd);font-size:11px;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(s.title)}</td>
+      <td>${esc(s.preacher)}</td>
+      <td style="font-size:.85rem;color:var(--txm)">${esc(s.scripture_ref||'—')}</td>
+      <td>${s.audio_path ? 'Yes' : '—'}</td>
+      <td style="display:flex;gap:6px">
+        <button class="act-btn act-del" onclick="deleteSermon('${esc(s.id)}')">Delete</button>
+      </td>
+    </tr>`).join('') + '</tbody></table>';
+}
+function openAddSermon() {
+  openAModal('Add New Sermon', `
+    <div class="fg" style="gap:12px">
+      <div><label class="fl">Sermon Title *</label><input class="fi" id="ns-title" placeholder="Full sermon title"></div>
+      <div class="fg fg-2">
+        <div><label class="fl">Preacher</label><input class="fi" id="ns-preacher" value="The Venerable Vicar"></div>
+        <div><label class="fl">Service</label><input class="fi" id="ns-service" placeholder="e.g. Holy Communion · 7:00 AM"></div>
+        <div><label class="fl">Day (DD)</label><input class="fi" id="ns-day" placeholder="e.g. 15" maxlength="2"></div>
+        <div><label class="fl">Month & Year</label><input class="fi" id="ns-month" placeholder="e.g. Mar 2025"></div>
+      </div>
+      <div><label class="fl">Scripture Reference</label><input class="fi" id="ns-ref" placeholder="e.g. Psalm 23 · John 10:1–18"></div>
+      <div><label class="fl">Summary (optional)</label><textarea class="fi" id="ns-summary" rows="3" placeholder="A brief summary of the sermon…"></textarea></div>
+      <div><label class="fl">Full Text (optional, HTML allowed)</label><textarea class="fi" id="ns-content" rows="5" placeholder="Full sermon text…"></textarea></div>
+      <div><label class="fl">Audio File (MP3/WAV)</label>
+        <div class="upload-area" onclick="document.getElementById('ns-audio').click()">
+          <div class="upload-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></div><div class="upload-label">Click to upload audio</div>
+          <input type="file" id="ns-audio" accept=".mp3,.wav,.m4a,.ogg" style="display:none">
+        </div>
+      </div>
+      <button class="tb-btn pri" onclick="submitSermon()">✦ Save Sermon</button>
+    </div>
+  `);
+}
+async function submitSermon() {
+  const title = document.getElementById('ns-title')?.value?.trim();
+  if (!title) { toast('Title required', true); return; }
+  const fd = new FormData();
+  fd.append('title', title);
+  fd.append('preacher', document.getElementById('ns-preacher')?.value || '');
+  fd.append('service', document.getElementById('ns-service')?.value || '');
+  fd.append('day', document.getElementById('ns-day')?.value || '');
+  fd.append('month_year', document.getElementById('ns-month')?.value || '');
+  fd.append('scripture_ref', document.getElementById('ns-ref')?.value || '');
+  fd.append('summary', document.getElementById('ns-summary')?.value || '');
+  fd.append('content', document.getElementById('ns-content')?.value || '');
+  const audio = document.getElementById('ns-audio');
+  if (audio?.files?.[0]) fd.append('audio', audio.files[0]);
+  const r = await UPLOAD('/sermons', fd);
+  const d = await r.json();
+  if (d.success) { toast('Sermon saved'); closeAModal(); loadSermons(); loadStats(); }
+  else toast(d.error || 'Failed', true);
+}
+async function deleteSermon(id) {
+  if (!confirm('Delete this sermon?')) return;
+  await API('/sermons/' + id, { method: 'DELETE' });
+  toast('Sermon deleted'); loadSermons(); loadStats();
+}
+
+// ── EVENTS ──
+let allEvents = [];
+async function loadEvents() {
+  const r = await API('/events').catch(()=>null);
+  if (!r || !r.ok) return;
+  allEvents = await r.json();
+  renderEventsTable();
+}
+function renderEventsTable() {
+  const el = document.getElementById('events-table-body');
+  if (!allEvents.length) { el.innerHTML = '<p style="padding:20px;text-align:center;color:var(--txm);font-style:italic">No events yet.</p>'; return; }
+  el.innerHTML = `<table><thead><tr><th>Date</th><th>Title</th><th>Season</th><th>Times</th><th>Actions</th></tr></thead><tbody>` +
+    allEvents.map(e => `<tr>
+      <td>${esc(e.day||'')} ${esc(e.month_year||'')}</td>
+      <td style="font-family:var(--fd);font-size:11px">${esc(e.title)}</td>
+      <td><span class="badge badge-pend">${esc(e.season||'—')}</span></td>
+      <td style="font-size:.85rem">${esc(e.times||'—')}</td>
+      <td><button class="act-btn act-del" onclick="deleteEvent('${esc(e.id)}')">Delete</button></td>
+    </tr>`).join('') + '</tbody></table>';
+}
+function openAddEvent() {
+  openAModal('Add New Event', `
+    <div class="fg" style="gap:12px">
+      <div><label class="fl">Event Title *</label><input class="fi" id="ne-title" placeholder="Full event title"></div>
+      <div class="fg fg-3">
+        <div><label class="fl">Day (DD)</label><input class="fi" id="ne-day" placeholder="e.g. 20" maxlength="2"></div>
+        <div><label class="fl">Month & Year</label><input class="fi" id="ne-month" placeholder="e.g. Apr 2025"></div>
+        <div><label class="fl">Season</label><input class="fi" id="ne-season" placeholder="e.g. Easter"></div>
+      </div>
+      <div><label class="fl">Service Times</label><input class="fi" id="ne-times" placeholder="e.g. 7:00 AM · 9:30 AM"></div>
+      <div><label class="fl">Description</label><textarea class="fi" id="ne-desc" rows="3" placeholder="Short description…"></textarea></div>
+      <div><label class="fl">Full Details (optional)</label><textarea class="fi" id="ne-details" rows="3" placeholder="Additional details, what to bring, etc."></textarea></div>
+      <button class="tb-btn pri" onclick="submitEvent()">✦ Save Event</button>
+    </div>
+  `);
+}
+async function submitEvent() {
+  const title = document.getElementById('ne-title')?.value?.trim();
+  if (!title) { toast('Title required', true); return; }
+  const r = await API('/events', { method: 'POST', body: JSON.stringify({ title, day: document.getElementById('ne-day')?.value, month_year: document.getElementById('ne-month')?.value, season: document.getElementById('ne-season')?.value, times: document.getElementById('ne-times')?.value, description: document.getElementById('ne-desc')?.value, details: document.getElementById('ne-details')?.value }) });
+  const d = await r.json();
+  if (d.success) { toast('Event saved'); closeAModal(); loadEvents(); loadStats(); }
+  else toast(d.error || 'Failed', true);
+}
+async function deleteEvent(id) {
+  if (!confirm('Delete this event?')) return;
+  await API('/events/' + id, { method: 'DELETE' });
+  toast('Event deleted'); loadEvents(); loadStats();
+}
+
+// ── GALLERY ──
+async function loadGallery() {
+  const r = await API('/gallery').catch(()=>null);
+  if (!r || !r.ok) return;
+  const items = await r.json();
+  const grid = document.getElementById('gallery-grid-admin');
+  if (!items.length) { grid.innerHTML = '<p style="padding:20px;grid-column:1/-1;text-align:center;color:var(--txm);font-style:italic">No photos yet.</p>'; return; }
+  grid.innerHTML = items.map(item => `
+    <div style="position:relative;aspect-ratio:1;overflow:hidden">
+      <img src="${esc(item.image_path)}" style="width:100%;height:100%;object-fit:cover">
+      <button onclick="deleteGallery('${esc(item.id)}')" style="position:absolute;top:4px;right:4px;background:rgba(139,0,0,.8);color:#fff;border:none;cursor:pointer;width:24px;height:24px;font-size:12px">✕</button>
+    </div>
+  `).join('');
+}
+async function uploadGallery(input) {
+  if (!input.files?.length) return;
+  // Preview
+  const prev = document.getElementById('gal-preview');
+  prev.innerHTML = '';
+  Array.from(input.files).forEach(f => {
+    const r = new FileReader();
+    r.onload = e => { const img = document.createElement('img'); img.src = e.target.result; img.style.cssText = 'width:80px;height:80px;object-fit:cover'; prev.appendChild(img); };
+    r.readAsDataURL(f);
+  });
+  const fd = new FormData();
+  Array.from(input.files).forEach(f => fd.append('images', f));
+  const r = await UPLOAD('/gallery', fd);
+  const d = await r.json();
+  if (d.success) { toast(`${d.count} photo(s) uploaded`); loadGallery(); loadStats(); prev.innerHTML = ''; }
+  else toast(d.error || 'Upload failed', true);
+}
+async function deleteGallery(id) {
+  await API('/gallery/' + id, { method: 'DELETE' });
+  toast('Photo deleted'); loadGallery(); loadStats();
+}
+
+// ── MEMBERS ──
+async function loadMembers() {
+  const r = await API('/members').catch(()=>null);
+  if (!r || !r.ok) return;
+  renderMembersTable(await r.json());
+}
+async function searchMembers() {
+  const q = document.getElementById('member-search')?.value?.trim();
+  const r = await API('/members' + (q ? '?q=' + encodeURIComponent(q) : '')).catch(()=>null);
+  if (!r || !r.ok) return;
+  renderMembersTable(await r.json());
+}
+function renderMembersTable(members) {
+  const el = document.getElementById('members-table-body');
+  if (!members.length) { el.innerHTML = '<p style="padding:20px;text-align:center;color:var(--txm);font-style:italic">No members found.</p>'; return; }
+  el.innerHTML = `<table><thead><tr><th>Name</th><th>Phone</th><th>Status</th><th>Registered</th><th>Actions</th></tr></thead><tbody>` +
+    members.map(m => `<tr>
+      <td style="font-family:var(--fd);font-size:11px">${esc(m.full_name)}</td>
+      <td>${esc(m.phone||'—')}</td>
+      <td><span class="badge ${m.status==='active'?'badge-ok':m.status==='rejected'?'badge-rej':'badge-pend'}">${esc(m.status||'pending')}</span></td>
+      <td>${fdate(m.registered_at)}</td>
+      <td style="display:flex;gap:6px;flex-wrap:wrap">
+        <button class="act-btn act-view" onclick="viewMember('${esc(m.id)}')">View</button>
+        <button class="act-btn" style="border-color:#006400;color:#006400" onclick="setMemberStatus('${esc(m.id)}','active')">Approve</button>
+        <button class="act-btn act-del" onclick="setMemberStatus('${esc(m.id)}','rejected')">Reject</button>
+        <a href="/admin/api/members/${esc(m.id)}/pdf" target="_blank"><button class="act-btn" style="border-color:var(--g);color:var(--g)">PDF</button></a>
+      </td>
+    </tr>`).join('') + '</tbody></table>';
+}
+async function viewMember(id) {
+  const r = await API('/members/' + id);
+  const m = await r.json();
+  openAModal('Member: ' + m.full_name, `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      ${m.photo ? `<div style="grid-column:1/-1"><img src="${esc(m.photo)}" style="height:120px;object-fit:cover"></div>` : ''}
+      ${[['Full Name',m.full_name],['Date of Birth',m.date_of_birth],['Gender',m.gender],['Marital Status',m.marital_status],['Phone',m.phone],['Email',m.email],['Address',m.address],['Nationality',m.nationality],['Hometown',m.hometown],['Occupation',m.occupation],['Baptized',m.baptized],['Baptism Church',m.baptism_church],['Confirmed',m.confirmed],['Confirmed By',m.confirmed_by],['Previous Parish',m.prev_parish],['Emergency Contact',m.emergency_contact],['Emergency Phone',m.emergency_phone]].map(([l,v])=>`<div><div style="font-family:var(--fd);font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--txm);margin-bottom:3px">${esc(l)}</div><div style="font-family:var(--fb);font-size:.9rem;color:var(--txt2)">${esc(v||'—')}</div></div>`).join('')}
+      <div style="grid-column:1/-1"><div style="font-family:var(--fd);font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--txm);margin-bottom:3px">Guilds</div><div style="font-family:var(--fb);font-size:.9rem;color:var(--txt2)">${esc(JSON.parse(m.guilds||'[]').join(', ')||'None')}</div></div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:16px;flex-wrap:wrap">
+      <a href="/admin/api/members/${esc(m.id)}/pdf" target="_blank"><button class="tb-btn pri">Download PDF</button></a>
+      <button class="tb-btn" onclick="setMemberStatus('${esc(m.id)}','active');closeAModal()">Approve</button>
+      <button class="tb-btn" style="border-color:var(--r);color:var(--r)" onclick="setMemberStatus('${esc(m.id)}','rejected');closeAModal()">✕ Reject</button>
+    </div>
+  `);
+}
+async function setMemberStatus(id, status) {
+  await API('/members/' + id + '/status', { method: 'PUT', body: JSON.stringify({ status }) });
+  toast('Status updated'); loadMembers(); loadStats();
+}
+
+// ── SUBMISSIONS ──
+let subFilter = '';
+async function loadSubmissions() {
+  const r = await API('/submissions' + (subFilter ? '?type=' + subFilter : '')).catch(()=>null);
+  if (!r || !r.ok) return;
+  const subs = await r.json();
+  const el = document.getElementById('subs-table-body');
+  if (!subs.length) { el.innerHTML = '<p style="padding:20px;text-align:center;color:var(--txm);font-style:italic">No submissions.</p>'; return; }
+  el.innerHTML = `<table><thead><tr><th>Type</th><th>Name</th><th>Details</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead><tbody>` +
+    subs.map(s => {
+      const detail = s.type === 'contact' ? s.subject || s.message?.slice(0,60) : s.type === 'registration' ? `${s.event_title} (${s.attendees})` : s.type === 'donation' ? `GHS ${s.amount||0} — ${s.purpose}` : s.guild || '';
+      return `<tr>
+        <td><span class="badge badge-pend">${esc(s.type)}</span></td>
+        <td style="font-family:var(--fd);font-size:11px">${esc(s.name)}</td>
+        <td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:.88rem">${esc(detail)}</td>
+        <td>${fdate(s.submitted_at)}</td>
+        <td><span class="badge ${s.read?'badge-ok':'badge-pend'}">${s.read?'Read':'New'}</span></td>
+        <td style="display:flex;gap:6px">
+          <button class="act-btn act-view" onclick="viewSub(${JSON.stringify(JSON.stringify(s)).slice(1,-1)})">View</button>
+          <button class="act-btn act-del" onclick="deleteSub('${esc(s.id)}','${esc(s.type)}')">Del</button>
+        </td>
+      </tr>`;
+    }).join('') + '</tbody></table>';
+}
+function filterSubs(btn, type) {
+  document.querySelectorAll('#panel-submissions .tb-btn').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  subFilter = type; loadSubmissions();
+}
+function viewSub(jsonStr) {
+  let s; try { s = JSON.parse(jsonStr); } catch { return; }
+  const fields = Object.entries(s).filter(([k]) => !['id','type','read'].includes(k))
+    .map(([k,v]) => `<div><div style="font-family:var(--fd);font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--txm);margin-bottom:2px">${esc(k.replace(/_/g,' '))}</div><div style="font-family:var(--fb);font-size:.9rem;color:var(--txt2)">${esc(String(v||'—'))}</div></div>`).join('');
+  openAModal('Submission: ' + s.type, `<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">${fields}</div>`);
+  if (!s.read) {
+    API('/submissions/read', { method: 'PUT', body: JSON.stringify({ id: s.id, type: s.type }) });
+    loadStats();
+  }
+}
+async function deleteSub(id, type) {
+  if (!confirm('Delete this submission?')) return;
+  await API('/submissions/' + id + '?type=' + type, { method: 'DELETE' });
+  toast('Deleted'); loadSubmissions();
+}
+
+// ── SITE / HERO PHOTOS ──
+async function loadHeroSlides() {
+  const r = await API('/hero-slides').catch(()=>null);
+  if (!r || !r.ok) return;
+  const slides = await r.json();
+  const grid = document.getElementById('hero-slides-grid');
+  if (!grid) return;
+  if (!slides.length) { grid.innerHTML = '<p style="color:var(--txm);font-style:italic">No custom slides yet. Default building photos are used.</p>'; return; }
+  grid.innerHTML = slides.map(s => `
+    <div style="position:relative;border-radius:4px;overflow:hidden;border:1px solid var(--brd)">
+      <img src="${esc(s.image_path)}" style="width:100%;height:120px;object-fit:cover;display:block">
+      <div style="padding:8px;background:var(--card);display:flex;align-items:center;justify-content:space-between">
+        <span style="font-family:var(--fd);font-size:9px;color:var(--txm)">#${esc(String(s.id))}</span>
+        <button class="act-btn act-del" onclick="deleteHeroSlide('${esc(s.id)}')">Remove</button>
+      </div>
+    </div>
+  `).join('');
+}
+async function uploadHeroSlide(input) {
+  if (!input.files?.length) return;
+  const fd = new FormData();
+  Array.from(input.files).forEach(f => fd.append('images', f));
+  const r = await UPLOAD('/hero-slides', fd);
+  const d = await r.json();
+  if (d.success) { toast(`${d.count} slide(s) added`); loadHeroSlides(); }
+  else toast(d.error || 'Upload failed', true);
+  input.value = '';
+}
+async function deleteHeroSlide(id) {
+  if (!confirm('Remove this slide?')) return;
+  await API('/hero-slides/' + id, { method: 'DELETE' });
+  toast('Slide removed'); loadHeroSlides();
+}
+
+// ── SETTINGS ──
+async function loadSettings() {
+  const r = await API('/settings').catch(()=>null);
+  if (!r || !r.ok) return;
+  const s = await r.json();
+  Object.entries(s).forEach(([k, v]) => {
+    const el = document.getElementById('set-' + k);
+    if (el) el.value = v || '';
+  });
+}
+async function saveSettings() {
+  const keys = ['church_name','church_location','church_phone','church_email','service_time_1','service_time_2','service_time_3'];
+  const data = {};
+  keys.forEach(k => { const el = document.getElementById('set-' + k); if (el) data[k] = el.value; });
+  const r = await API('/settings', { method: 'PUT', body: JSON.stringify(data) });
+  const d = await r.json();
+  if (d.success) toast('Settings saved');
+  else toast('Failed to save', true);
+}
+
+// ── ADMINS ──
+async function loadAdmins() {
+  const r = await API('/admins').catch(()=>null);
+  if (!r || !r.ok) return;
+  const admins = await r.json();
+  const el = document.getElementById('admins-table-body');
+  el.innerHTML = `<table><thead><tr><th>Username</th><th>Name</th><th>Role</th><th>Last Login</th><th>Actions</th></tr></thead><tbody>` +
+    admins.map(a => `<tr>
+      <td style="font-family:var(--fd);font-size:11px">${esc(a.username)}</td>
+      <td>${esc(a.name)}</td>
+      <td><span class="badge badge-pend">${esc(a.role)}</span></td>
+      <td>${fdate(a.last_login)}</td>
+      <td><button class="act-btn act-view" onclick="changeAdminPassword(${a.id})">Change PW</button></td>
+    </tr>`).join('') + '</tbody></table>';
+}
+function openAddAdmin() {
+  openAModal('Add Admin User', `
+    <div class="fg" style="gap:12px">
+      <div><label class="fl">Username *</label><input class="fi" id="na-user" placeholder="login username"></div>
+      <div><label class="fl">Full Name</label><input class="fi" id="na-name" placeholder="Display name"></div>
+      <div><label class="fl">Password *</label><input class="fi" id="na-pw" type="password" placeholder="Min 8 characters"></div>
+      <div><label class="fl">Role</label><select class="fi" id="na-role"><option value="editor">Editor</option><option value="media">Media</option><option value="super_admin">Super Admin</option></select></div>
+      <button class="tb-btn pri" onclick="submitAdmin()">✦ Create Admin</button>
+    </div>
+  `);
+}
+async function submitAdmin() {
+  const username = document.getElementById('na-user')?.value?.trim();
+  const password = document.getElementById('na-pw')?.value;
+  if (!username || !password) { toast('Username and password required', true); return; }
+  const r = await API('/admins', { method: 'POST', body: JSON.stringify({ username, password, name: document.getElementById('na-name')?.value, role: document.getElementById('na-role')?.value }) });
+  const d = await r.json();
+  if (d.success) { toast('Admin created'); closeAModal(); loadAdmins(); }
+  else toast(d.error || 'Failed', true);
+}
+function changeAdminPassword(id) {
+  openAModal('Change Password', `
+    <div class="fg" style="gap:12px">
+      <div><label class="fl">New Password *</label><input class="fi" id="cpw-new" type="password" placeholder="New password"></div>
+      <button class="tb-btn pri" onclick="submitChangePw(${id})">✦ Update Password</button>
+    </div>
+  `);
+}
+async function submitChangePw(id) {
+  const password = document.getElementById('cpw-new')?.value;
+  if (!password) { toast('Password required', true); return; }
+  const r = await API('/admins/' + id + '/password', { method: 'PUT', body: JSON.stringify({ password }) });
+  const d = await r.json();
+  if (d.success) { toast('Password updated'); closeAModal(); }
+  else toast('Failed', true);
+}
+
+// ── EXPORT ──
+async function exportData() {
+  window.open('/admin/api/export', '_blank');
+  toast('Export started');
+}
+
+// ── LOGOUT ──
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('mob-open');
+}
+// Close sidebar when clicking outside on mobile
+document.addEventListener('click', e => {
+  const sb = document.getElementById('sidebar');
+  const btn = document.getElementById('mob-sb-btn');
+  if (window.innerWidth <= 900 && sb && btn && !sb.contains(e.target) && !btn.contains(e.target)) {
+    sb.classList.remove('mob-open');
+  }
+});
+
+async function logout() {
+  if (!confirm('Sign out of the admin panel?')) return;
+  localStorage.removeItem('admin_token');
+  window.location.href = '/auth/logout';
+}
+</script>
+</body>
+</html>

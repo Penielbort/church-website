@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Login — St. Peter Anglican Church</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cinzel+Decorative:wght@700&family=EB+Garamond:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'EB Garamond',serif;min-height:100vh;display:flex;background:#130f1a}
+.login-left{flex:1;background:linear-gradient(160deg,#1a003a,#2D0050,#4B0082);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 40px;position:relative;overflow:hidden}
+.login-left::before{content:'';position:absolute;inset:0;opacity:.04;background-image:repeating-linear-gradient(0deg,transparent,transparent 50px,rgba(201,162,39,.5) 50px,rgba(201,162,39,.5) 51px),repeating-linear-gradient(90deg,transparent,transparent 50px,rgba(201,162,39,.5) 50px,rgba(201,162,39,.5) 51px)}
+.ll-inner{position:relative;z-index:1;text-align:center;max-width:360px}
+.ll-cross{font-size:48px;color:#C9A227;margin-bottom:28px;letter-spacing:8px}
+.ll-name{font-family:'Cinzel Decorative',serif;font-size:1.7rem;color:#fff;line-height:1.2;margin-bottom:8px}
+.ll-loc{font-family:'EB Garamond',serif;font-style:italic;font-size:1rem;color:rgba(255,255,255,.45);margin-bottom:32px}
+.ll-verse{font-family:'EB Garamond',serif;font-size:1.05rem;font-style:italic;color:rgba(255,255,255,.55);line-height:1.7;border-left:2px solid rgba(201,162,39,.4);padding-left:16px;text-align:left}
+.login-right{width:440px;display:flex;align-items:center;justify-content:center;padding:40px}
+.login-box{width:100%;max-width:380px}
+.lb-eye{font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:.3em;text-transform:uppercase;color:#C9A227;margin-bottom:14px;display:block}
+.lb-title{font-family:'Cinzel Decorative',serif;font-size:1.6rem;color:#fff;margin-bottom:6px}
+.lb-sub{font-style:italic;color:rgba(255,255,255,.4);font-size:.95rem;margin-bottom:36px}
+.lbl{font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.4);display:block;margin-bottom:8px}
+.inp{width:100%;background:rgba(255,255,255,.06);border:1.5px solid rgba(201,162,39,.2);color:#fff;padding:12px 16px;font-family:'EB Garamond',serif;font-size:1rem;outline:none;transition:border-color .25s;margin-bottom:20px}
+.inp:focus{border-color:rgba(201,162,39,.6)}
+.inp::placeholder{color:rgba(255,255,255,.2)}
+.login-btn{width:100%;font-family:'Cinzel',serif;font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;background:#C9A227;color:#1a0e00;padding:14px;border:none;cursor:pointer;transition:background .25s;margin-top:4px}
+.login-btn:hover{background:#E4BC4A}
+.login-btn:disabled{opacity:.6;cursor:not-allowed}
+.err-msg{background:rgba(139,0,0,.2);border:1px solid rgba(139,0,0,.5);color:#ff9999;font-family:'EB Garamond',serif;font-size:.9rem;padding:10px 14px;margin-bottom:20px;display:none}
+.err-msg.show{display:block}
+.spinner{width:14px;height:14px;border:2px solid rgba(26,14,0,.3);border-top-color:#1a0e00;border-radius:50%;animation:spin .7s linear infinite;display:inline-block;vertical-align:middle;margin-right:6px}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:768px){
+  body{flex-direction:column}
+  .login-left{padding:40px 24px;flex:none}
+  .login-right{width:100%;padding:32px 24px}
+}
+</style>
+</head>
+<body>
+<div class="login-left">
+  <div class="ll-inner">
+    <img src="/images/logo.png" alt="St. Peter Anglican" style="width:80px;height:80px;border-radius:50%;object-fit:cover;border:3px solid rgba(201,162,39,.5);margin-bottom:24px">
+    <div class="ll-name">St. Peter<br>Anglican Church</div>
+    <div class="ll-loc">Nungua · Accra · Ghana</div>
+    <div class="ll-verse">"I am the door: by me if any man enter in, he shall be saved."<br><br>— St. John 10:9</div>
+  </div>
+</div>
+<div class="login-right">
+  <div class="login-box">
+    <span class="lb-eye">Secure Access</span>
+    <div class="lb-title">Admin Panel</div>
+    <div class="lb-sub">Sign in to manage the parish website</div>
+    <div class="err-msg" id="err-msg"></div>
+    <label class="lbl">Username</label>
+    <input class="inp" type="text" id="username" placeholder="Enter your username" autocomplete="username" onkeydown="if(event.key==='Enter')login()">
+    <label class="lbl">Password</label>
+    <input class="inp" type="password" id="password" placeholder="Enter your password" autocomplete="current-password" onkeydown="if(event.key==='Enter')login()">
+    <button class="login-btn" id="login-btn" onclick="login()">Sign In ✦</button>
+  </div>
+</div>
+<script>
+async function login() {
+  const username = document.getElementById('username').value.trim();
+  const password = document.getElementById('password').value;
+  const btn = document.getElementById('login-btn');
+  const err = document.getElementById('err-msg');
+  if (!username || !password) { showError('Please enter your username and password.'); return; }
+  btn.innerHTML = '<span class="spinner"></span>Signing in…';
+  btn.disabled = true;
+  err.classList.remove('show');
+  try {
+    const r = await fetch('/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password })
+    });
+    const d = await r.json();
+    if (d.success) { if (d.token) localStorage.setItem('admin_token', d.token); window.location.href = d.redirect || '/admin'; }
+    else { showError(d.error || 'Login failed. Please try again.'); btn.innerHTML = 'Sign In ✦'; btn.disabled = false; }
+  } catch (_) {
+    showError('Network error. Please try again.');
+    btn.innerHTML = 'Sign In ✦'; btn.disabled = false;
+  }
+}
+function showError(msg) {
+  const err = document.getElementById('err-msg');
+  err.textContent = msg;
+  err.classList.add('show');
+}
+document.getElementById('username').focus();
+</script>
+</body>
+</html>
